@@ -65,3 +65,9 @@ D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\PagedList.Core.Mvc.dl
 D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Share Models.dll
 D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Share Models.pdb
 D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\obj\Debug\net6.0\EcommerceAPI.MvcApplicationPartsAssemblyInfo.cs
+D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
+D:\ASP.Net Core\EcommerceAPI\EcommerceAPI\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll

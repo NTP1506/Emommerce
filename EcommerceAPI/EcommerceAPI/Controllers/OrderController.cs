@@ -10,6 +10,12 @@ namespace EcommerceAPI.Controllers
     public class OrderController : Controller
     {
         private readonly dbEcommerceContext _dbContext;
+
+        public OrderController(dbEcommerceContext dbContext)
+        {
+             _dbContext = dbContext;
+        }
+
         [HttpGet]
         public async Task<ActionResult<Order>> Get()
         {
@@ -19,17 +25,17 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Order model)
+        public async Task<ActionResult> Create([FromBody]Order model)
         {
-            var order = new Order
-            {
-                //Name = model.Name,
-                //Price = model.Price,
-                //Description = model.Description,
-                //BrandId = model.BrandId
-            };
+            //var order = new Order
+            //{
+            //    //Name = model.Name,
+            //    //Price = model.Price,
+            //    //Description = model.Description,
+            //    //BrandId = model.BrandId
+            //};
 
-            _dbContext.Orders.Add(order);
+            _dbContext.Orders.Add(model);
             await _dbContext.SaveChangesAsync();
 
             return Accepted();
@@ -37,7 +43,7 @@ namespace EcommerceAPI.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, Order model)
+        public async Task<ActionResult> Update( int id, Order model)
         {
             var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
 
@@ -55,7 +61,7 @@ namespace EcommerceAPI.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete([FromBody] int id)
         {
             var order = await _dbContext.Orders.FirstOrDefaultAsync(x => x.OrderId == id);
 

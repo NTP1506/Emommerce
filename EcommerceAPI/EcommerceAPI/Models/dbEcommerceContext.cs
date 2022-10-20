@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Share_Models;
@@ -8,16 +10,12 @@ using Share_Models;
 
 namespace EcommerceAPI.Models
 {
-    public partial class dbEcommerceContext : DbContext
+    public partial class dbEcommerceContext : IdentityDbContext<IdentityUser>
     {
-        public dbEcommerceContext()
+        public dbEcommerceContext(DbContextOptions<dbEcommerceContext> options) : base(options)
         {
         }
-
-        public dbEcommerceContext(DbContextOptions<dbEcommerceContext> options)
-            : base(options)
-        {
-        }
+       
 
         public virtual DbSet<Account> Accounts { get; set; }
         public virtual DbSet<Share_Models.Attribute> Attributes { get; set; }
@@ -46,6 +44,7 @@ namespace EcommerceAPI.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
 
             modelBuilder.Entity<Account>(entity =>
@@ -199,10 +198,10 @@ namespace EcommerceAPI.Models
 
                 entity.Property(e => e.TransactStatusId).HasColumnName("TransactStatusID");
 
-                entity.HasOne(d => d.TransactStatus)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.TransactStatusId)
-                    .HasConstraintName("FK_Orderss");
+                //entity.HasOne(d => d.TransactStatus)
+                //    .WithMany(p => p.Orders)
+                //    .HasForeignKey(d => d.TransactStatusId)
+                //    .HasConstraintName("FK_Orderss");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -294,24 +293,24 @@ namespace EcommerceAPI.Models
                 entity.Property(e => e.Status).HasMaxLength(50);
             });
             
-            for (int i = 1; i < 9; i++)
-            {
-                modelBuilder.Entity<Product>().HasData(
-                new
-                {
-                    ProductId = i,
-                    ProductName = "Product " + i,
-                    Descriptions = "Product " + i,
-                    //Thump = $"./images/product-{i}.png",
-                    Price = (int)10000,
-                    DateCreated = DateTime.Now,
-                    DateModified = DateTime.Now,
-                    CatId = 1,
-                    Active = true,
-                    BestSellers = true,
-                    HomeFlag = true
-                });
-            }
+            //for (int i = 1; i < 9; i++)
+            //{
+            //    modelBuilder.Entity<Product>().HasData(
+            //    new
+            //    {
+            //        ProductId = i,
+            //        ProductName = "Product " + i,
+            //        Descriptions = "Product " + i,
+            //        //Thump = $"./images/product-{i}.png",
+            //        Price = (int)10000,
+            //        DateCreated = DateTime.Now,
+            //        DateModified = DateTime.Now,
+            //        CatId = 1,
+            //        Active = true,
+            //        BestSellers = true,
+            //        HomeFlag = true
+            //    });
+            //}
 
             OnModelCreatingPartial(modelBuilder);
         }

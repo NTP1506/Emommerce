@@ -18,6 +18,7 @@ namespace EcommerceAPI.Controllers
 
 
         [HttpGet]
+        [Route("customer-get")]
         public async Task<ActionResult<Share_Models.Customer>> Get()
         {
 
@@ -25,21 +26,32 @@ namespace EcommerceAPI.Controllers
             return Ok(customers);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Create(Share_Models.Customer model)
-        {
-            var customer = new Share_Models.Customer
-            {
-                //Name = model.Name,
-                //Price = model.Price,
-                //Description = model.Description,
-                //BrandId = model.BrandId
-            };
 
-            _dbContext.Customers.Add(customer);
+        [HttpGet]
+        [Route("CustomerlastID")]
+        public async Task<ActionResult<Customer>> GetLastID()
+        {
+            var KH =await _dbContext.Customers
+            .OrderByDescending(blog => blog.CustomerId).FirstOrDefaultAsync();
+
+            if (KH == null)
+            {
+                return NotFound();
+            }
+            await _dbContext.SaveChangesAsync();
+            return Ok(KH);
+        }
+
+        [HttpPost]
+        [Route("customerpost")]
+        public async Task<ActionResult> Create([FromBody] Customer model)
+        {
+           
+            _dbContext.Customers.Add(model);
             await _dbContext.SaveChangesAsync();
 
             return Accepted();
+
         }
 
 

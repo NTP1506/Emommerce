@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CustomerSite.ModelViews
@@ -35,5 +36,6 @@ namespace CustomerSite.ModelViews
         [Display(Name ="Nhập lại mật khẩu")]
         [Compare("Password",ErrorMessage ="Nhập lại mật khẩu không đúng")]
         public string ConfirmPassword { get; set; }
+        public HttpStatusCode StatusCode { get; internal set; }
     }
 }

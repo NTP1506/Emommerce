@@ -23,6 +23,204 @@ namespace EcommerceAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("Share_Models.Account", b =>
                 {
                     b.Property<int>("AccountId")
@@ -492,112 +690,6 @@ namespace EcommerceAPI.Migrations
                     b.HasIndex("CatId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            ProductId = 1,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9929),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9937),
-                            Descriptions = "Product 1",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 1"
-                        },
-                        new
-                        {
-                            ProductId = 2,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9966),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9966),
-                            Descriptions = "Product 2",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 2"
-                        },
-                        new
-                        {
-                            ProductId = 3,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9976),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9976),
-                            Descriptions = "Product 3",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 3"
-                        },
-                        new
-                        {
-                            ProductId = 4,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9985),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9985),
-                            Descriptions = "Product 4",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 4"
-                        },
-                        new
-                        {
-                            ProductId = 5,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9993),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 586, DateTimeKind.Local).AddTicks(9994),
-                            Descriptions = "Product 5",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 5"
-                        },
-                        new
-                        {
-                            ProductId = 6,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 587, DateTimeKind.Local).AddTicks(4),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 587, DateTimeKind.Local).AddTicks(5),
-                            Descriptions = "Product 6",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 6"
-                        },
-                        new
-                        {
-                            ProductId = 7,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 587, DateTimeKind.Local).AddTicks(13),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 587, DateTimeKind.Local).AddTicks(13),
-                            Descriptions = "Product 7",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 7"
-                        },
-                        new
-                        {
-                            ProductId = 8,
-                            Active = true,
-                            BestSellers = true,
-                            CatId = 1,
-                            DateCreated = new DateTime(2022, 10, 18, 16, 51, 2, 587, DateTimeKind.Local).AddTicks(21),
-                            DateModified = new DateTime(2022, 10, 18, 16, 51, 2, 587, DateTimeKind.Local).AddTicks(22),
-                            Descriptions = "Product 8",
-                            HomeFlag = true,
-                            Price = 10000,
-                            ProductName = "Product 8"
-                        });
                 });
 
             modelBuilder.Entity("Share_Models.Role", b =>
@@ -635,6 +727,57 @@ namespace EcommerceAPI.Migrations
                     b.HasKey("TransactStatusId");
 
                     b.ToTable("TransactStatus", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Share_Models.Account", b =>
@@ -690,7 +833,7 @@ namespace EcommerceAPI.Migrations
             modelBuilder.Entity("Share_Models.Product", b =>
                 {
                     b.HasOne("Share_Models.Category", "Cat")
-                        .WithMany()
+                        .WithMany("Products")
                         .HasForeignKey("CatId");
 
                     b.Navigation("Cat");
@@ -699,6 +842,11 @@ namespace EcommerceAPI.Migrations
             modelBuilder.Entity("Share_Models.Attribute", b =>
                 {
                     b.Navigation("AttributesPrices");
+                });
+
+            modelBuilder.Entity("Share_Models.Category", b =>
+                {
+                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Share_Models.Order", b =>

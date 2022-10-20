@@ -21,5 +21,6 @@ namespace Share_Models
         public string MetaKey { get; set; }
         public string Cover { get; set; }
         public string SchemaMarkup { get; set; }
+        //public virtual ICollection<Product> Products { get; set; }
     }
 }
