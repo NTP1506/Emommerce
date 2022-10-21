@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pnvoN/vntrk8r+O65RXAVuSOKNrEF81sjtkZOj7C+5mo9+Xb168fj1uvHIgVrFhsrxhXN+uQQ7gw2k5KMfwHdw==",
+  "dgSpecHash": "Xn+RctTl7r9qOVqptUTMQ6A2CWrtQM996Olm3b9Wk4rb8O1spRbwILUSOsytMBQBhx10f5pVIRzLR7riKOLvWw==",
   "success": true,
-  "projectFilePath": "D:\\ASP.Net Core\\EcommerceAPI\\EcommerceAPI\\EcommerceAPI.csproj",
+  "projectFilePath": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\EcommerceAPI\\EcommerceAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\DELL\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\DELL\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.10\\microsoft.aspnetcore.authentication.jwtbearer.6.0.10.nupkg.sha512",

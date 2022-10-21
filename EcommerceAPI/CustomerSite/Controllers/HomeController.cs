@@ -31,7 +31,7 @@ namespace CustomerSite.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var response = await _httpClient.GetAsync("Product");
+            var response = await _httpClient.GetAsync("Product/Get");
             var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
             _products = JsonConvert.DeserializeObject<List<Product>>(content);
 

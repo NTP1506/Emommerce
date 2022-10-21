@@ -10,3 +10,15 @@ D:\ASP.Net Core\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.dll
 D:\ASP.Net Core\EcommerceAPI\Share Models\obj\Debug\net6.0\refint\Share Models.dll
 D:\ASP.Net Core\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.pdb
 D:\ASP.Net Core\EcommerceAPI\Share Models\obj\Debug\net6.0\ref\Share Models.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\bin\Debug\net6.0\Share Models.deps.json
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\bin\Debug\net6.0\Share Models.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\bin\Debug\net6.0\Share Models.pdb
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.csproj.AssemblyReference.cache
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.GeneratedMSBuildEditorConfig.editorconfig
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.AssemblyInfoInputs.cache
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.AssemblyInfo.cs
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.csproj.CoreCompileInputs.cache
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\refint\Share Models.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.pdb
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\ref\Share Models.dll

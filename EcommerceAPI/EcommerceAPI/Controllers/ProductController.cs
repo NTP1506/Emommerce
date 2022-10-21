@@ -6,7 +6,7 @@ using Share_Models;
 namespace EcommerceAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("[controller]/[action]")]
     public class ProductController : Controller
     {
         private readonly dbEcommerceContext _dbContext;
@@ -43,6 +43,23 @@ namespace EcommerceAPI.Controllers
             return Accepted();
         }
 
+        //[HttpPost]
+       
+        //public async Task<ActionResult> Rate(ProductRate productRate)
+        //{
+        //    Product target = _dbContext.Products.Where(p => p.ProductId == productRate.Id).FirstOrDefault();
+        //    if (target != null)
+        //    {
+        //        if (target.RatingCount == null) target.RatingCount = 0;
+        //        target.RatingCount++;
+        //        if (target.Rating == null || target.Rating <= 0) target.Rating = productRate.Rate;
+        //        else target.Rating = (float)(target.Rating + productRate.Rate) / 2;
+        //        _dbContext.Entry(target).State = EntityState.Modified;
+        //        await _dbContext.SaveChangesAsync();
+        //        return new OkResult();
+        //    }
+        //    return new NotFoundResult();
+        //}
 
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, Product model)
@@ -53,11 +70,6 @@ namespace EcommerceAPI.Controllers
             {
                 return NotFound();
             }
-
-            //product.Name = model.Name;
-            //product.Price = model.Price;
-            //product.Description = model.Description;
-
             await _dbContext.SaveChangesAsync();
             return Accepted();
         }

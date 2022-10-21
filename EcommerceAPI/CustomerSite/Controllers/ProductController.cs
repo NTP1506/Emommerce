@@ -28,7 +28,7 @@ namespace CustomerSite.Controllers
         [Route("shop.html", Name = ("ShopProduct"))]
         public async  Task<IActionResult> Index(int? page)
         {
-            var response = await _httpClient.GetAsync("Product");
+            var response = await _httpClient.GetAsync("Product/Get");
             var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
             _products = JsonConvert.DeserializeObject<List<Product>>(content);
             try
@@ -74,8 +74,11 @@ namespace CustomerSite.Controllers
 
         }
         [Route("/{Alias}-{id}.html", Name = ("ProductDetails"))]
-        public IActionResult Details(int id)
+        public async  Task<IActionResult> Details(int id)
         {
+            var response = await _httpClient.GetAsync("Product/Get");
+            var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
+            _products = JsonConvert.DeserializeObject<List<Product>>(content);
             try
             {
                 var product = _products.FirstOrDefault(x => x.ProductId == id);
@@ -96,5 +99,24 @@ namespace CustomerSite.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+        //[HttpPost]
+        //[Route("Rate")]
+        //public async Task<IActionResult> Rate(string _alias, int id, [FromForm] byte rate)
+        //{
+        //    var response = await _httpClient.GetAsync("Product/Get");
+        //    var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
+        //    _products = JsonConvert.DeserializeObject<List<Product>>(content);
+
+        //    //var _alias = _products
+        //    //        .Where(x => x.ProductId == id).ToList();
+                   
+        //    response = await _httpClient.PostAsJsonAsync("Product/Rate", new ProductRate { Id = id, Rate = rate });
+
+        //    if (response.IsSuccessStatusCode)
+        //    {
+        //        return RedirectToAction("Details", new {id = id});
+        //    }
+        //    return new BadRequestResult();
+        //}
     }
 }

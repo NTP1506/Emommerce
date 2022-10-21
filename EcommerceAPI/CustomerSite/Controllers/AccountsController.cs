@@ -20,6 +20,9 @@ using System.Text;
 using System.Net.Http;
 using NuGet.Protocol;
 using System.IdentityModel.Tokens.Jwt;
+using PagedList.Core;
+using static System.Collections.Specialized.BitVector32;
+using static System.Net.Mime.MediaTypeNames;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CustomerSite.Controllers
@@ -32,7 +35,7 @@ namespace CustomerSite.Controllers
         private HttpClient _httpClient;
         List<Customer> _customers;
         List<Order> _orders;
-        
+        Check _check;
         public AccountsController()
         {
            
@@ -95,10 +98,36 @@ namespace CustomerSite.Controllers
             response = await _httpClient.GetAsync("Order");
             content = await response.Content.ReadAsStringAsync();  // laasys body cua data
             _orders = JsonConvert.DeserializeObject<List<Order>>(content);
-            var taikhoanID = HttpContext.Session.GetString("CustomerId");
-            if (taikhoanID != null)
+           
+            var taikhoanID_Register = HttpContext.Session.GetString("CustomerId_Register");
+            //string UserName = taikhoanID.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
+            var a = HttpContext.Session.GetString("CustomerId_LogIn"); 
+            if(a!= null)
             {
-                var khachhang = _customers.SingleOrDefault(x => x.CustomerId == Convert.ToInt32(taikhoanID));
+                var handler = new JwtSecurityTokenHandler();
+                JwtSecurityToken UserName = handler.ReadJwtToken(a);
+                string taikhoanID_Login = UserName.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
+                if (taikhoanID_Login != null)
+                {
+                    var khachhang = _customers.SingleOrDefault(x => x.FullName == Convert.ToString(taikhoanID_Login));
+                    if (khachhang != null)
+                    {
+                        var lsDonHang = _orders
+                            .Where(x => x.CustomerId == khachhang.CustomerId)
+                            .OrderByDescending(x => x.OrderDate)
+                            .ToList();
+                        ViewBag.DonHang = lsDonHang;
+                        return View(khachhang);
+                    }
+                }
+                return RedirectToAction("Login");
+            }
+            //var taikhoanID_Login = HttpContext.Session.GetString("CustomerId");
+            if (taikhoanID_Register != null)
+            {
+                
+                var taikhoan =  Convert.ToString(taikhoanID_Register);
+                var khachhang = _customers.SingleOrDefault(x => x.CustomerId == Convert.ToInt32(taikhoanID_Register));
                 if (khachhang != null)
                 {
                     var lsDonHang = _orders
@@ -108,7 +137,6 @@ namespace CustomerSite.Controllers
                     ViewBag.DonHang = lsDonHang;
                     return View(khachhang);
                 }
-
             }
             return RedirectToAction("Login");
         }
@@ -159,9 +187,10 @@ namespace CustomerSite.Controllers
                         response = await _httpClient.GetAsync("/CustomerlastID");
                         contents = await response.Content.ReadAsStringAsync();  // laasys body cua data
                         khachhangID = JsonConvert.DeserializeObject<Customer>(contents);
-                        HttpContext.Session.SetString("CustomerId", khachhangID.CustomerId.ToString());
-                        var taikhoanid = HttpContext.Session.GetString("CustomerId");
-                        //data = JsonConvert.DeserializeObject<RegisterViewModel>(contents);
+                        HttpContext.Session.SetString("CustomerId_Register", khachhangID.CustomerId.ToString());
+                        var taikhoanid = HttpContext.Session.GetString("CustomerId_Register");
+                        
+                       
                         if ( data.StatusCode != null)
                         {
                             return RedirectToAction("Dashboard", "Accounts");
@@ -211,7 +240,7 @@ namespace CustomerSite.Controllers
            
             try
             {
-                if (ModelState.IsValid)
+                 if (ModelState.IsValid)
                 {
                     bool isEmail = Utilities.IsValidEmail(customer.UserName);
                     if (!isEmail) return View(customer);
@@ -241,8 +270,12 @@ namespace CustomerSite.Controllers
                     if (secureToken != null)
                     {
                         //Luu Session MaKh
-                        HttpContext.Session.SetString("CustomerId", secureToken.ToString() );
-                        var taikhoanID = HttpContext.Session.GetString("CustomerId");
+                        //string UserName = secureToken.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
+                        HttpContext.Session.SetString("CustomerId_LogIn", responseToken.Token);
+                        //var taikhoanID = HttpContext.Session.GetString("CustomerId");
+                        //string UserName = secureToken.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
+                        
+                        return RedirectToAction("Dashboard", "Accounts");
                     }   
                    
                 }
@@ -254,11 +287,13 @@ namespace CustomerSite.Controllers
             return View(customer);
         }
         [HttpGet]
+        [AllowAnonymous]
         [Route("dang-xuat.html", Name = "DangXuat")]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            HttpContext.Session.Remove("CustomerId");
+            HttpContext.Session.Remove("CustomerId_LogIn");
+            HttpContext.Session.Remove("CustomerId_Register");
             return RedirectToAction("Index", "Home");
         }
 

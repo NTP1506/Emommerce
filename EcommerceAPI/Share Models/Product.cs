@@ -33,7 +33,13 @@ namespace Share_Models
         public string MetaDesc { get; set; }
         public string MetaKey { get; set; }
         public int? UnitslnStock { get; set; }
+
+        public float? Rating { get; set; }
+        public int? RatingCount { get; set; }
+
+
         public virtual Category Cat { get; set; }
+
         public virtual ICollection<AttributesPrice> AttributesPrices { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
