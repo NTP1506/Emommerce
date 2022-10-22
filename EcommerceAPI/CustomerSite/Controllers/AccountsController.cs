@@ -189,8 +189,18 @@ namespace CustomerSite.Controllers
                         khachhangID = JsonConvert.DeserializeObject<Customer>(contents);
                         HttpContext.Session.SetString("CustomerId_Register", khachhangID.CustomerId.ToString());
                         var taikhoanid = HttpContext.Session.GetString("CustomerId_Register");
-                        
-                       
+
+                        //Identity
+                        var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name,khachhang.FullName),
+                            new Claim("CustomerId", khachhang.CustomerId.ToString())
+                        };
+                        ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "login");
+                        ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                        await HttpContext.SignInAsync(claimsPrincipal);
+
+
                         if ( data.StatusCode != null)
                         {
                             return RedirectToAction("Dashboard", "Accounts");
@@ -266,6 +276,15 @@ namespace CustomerSite.Controllers
                     JwtResponseToken responseToken = JsonConvert.DeserializeObject<JwtResponseToken>(content);
                     var handler = new JwtSecurityTokenHandler();
                     JwtSecurityToken secureToken = handler.ReadJwtToken(responseToken.Token);
+                    //identity
+                    var claims = new List<Claim>
+                        {
+                            new Claim(ClaimTypes.Name,khachhang.FullName),
+                            new Claim("CustomerId", khachhang.CustomerId.ToString())
+                        };
+                    ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "login");
+                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    await HttpContext.SignInAsync(claimsPrincipal);
 
                     if (secureToken != null)
                     {

@@ -23,8 +23,23 @@ namespace EcommerceAPI.Controllers
             var orders = await _dbContext.Orders.Include(o => o.TransactStatus).ToListAsync();
             return Ok(orders);
         }
+        [HttpGet]
+        [Route("OrderlastID")]
+        public async Task<ActionResult<Order>> GetLastID()
+        {
+            var order_ID = await _dbContext.Orders
+            .OrderByDescending(o => o.OrderId).FirstOrDefaultAsync();
+
+            if (order_ID == null)
+            {
+                order_ID.OrderId = 0;
+            }
+            await _dbContext.SaveChangesAsync();
+            return Ok(order_ID);
+        }
 
         [HttpPost]
+
         public async Task<ActionResult> Create([FromBody]Order model)
         {
             //var order = new Order

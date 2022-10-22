@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using CustomerSite.Models;
 using Share_Models;
 
-namespace WebShop.ModelViews
+namespace CustomerSite.ModelViews
 {
     public class XemDonHang
     {
