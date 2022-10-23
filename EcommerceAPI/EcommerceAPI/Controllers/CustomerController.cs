@@ -56,7 +56,7 @@ namespace EcommerceAPI.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, Share_Models.Customer model)
+        public async Task<ActionResult> Update(int id, [FromBody] Share_Models.Customer model)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == id);
 

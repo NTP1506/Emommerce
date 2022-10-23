@@ -316,5 +316,49 @@ namespace CustomerSite.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        //[HttpPut]
+        public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
+        {
+            try
+            {
+                var response = await _httpClient.GetAsync("/customer-get");
+                var content = await response.Content.ReadAsStringAsync();  
+                 var _customers = JsonConvert.DeserializeObject<List<Customer>>(content);
+                var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+                var handler = new JwtSecurityTokenHandler();
+                JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);
+                //lay attribute name cua nguoi dang nhap.
+                string taikhoanID = UserName.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
+                
+                if (taikhoanID == null)
+                {
+                    return RedirectToAction("Login", "Accounts");
+                }
+                if (ModelState.IsValid)
+                {
+                    var khachhang = _customers.SingleOrDefault(x => x.FullName == Convert.ToString(taikhoanID));
+                    if (khachhang == null) return RedirectToAction("Login", "Accounts");
+                    var pass = (model.PasswordNow.Trim() + khachhang.Salt.Trim()).ToMD5();
+                    {
+                        string passnew = (model.Password.Trim() + khachhang.Salt.Trim()).ToMD5();
+                        khachhang.Password = passnew;
+                        var id = khachhang.CustomerId;
+                        response = await _httpClient.PutAsJsonAsync("/{id}", khachhang.CustomerId);
+                        //_context.Update(taikhoan);
+                        //_context.SaveChanges();
+                        // _notyfService.Success("Đổi mật khẩu thành công");
+                        return RedirectToAction("Dashboard", "Accounts");
+                    }
+                }
+            }
+            catch
+            {
+                // _notyfService.Success("Thay đổi mật khẩu không thành công");
+                return RedirectToAction("Dashboard", "Accounts");
+            }
+            //_notyfService.Success("Thay đổi mật khẩu không thành công");
+            return RedirectToAction("Dashboard", "Accounts");
+        }
+
     }
 }

@@ -54,14 +54,17 @@ namespace CustomerSite.Controllers
         [Route("checkout.html", Name = "Checkout")]
         public async Task<IActionResult> Index(string returnUrl = null)
         {
+
             var response = await _httpClient.GetAsync("/customer-get");
             var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
             var _customers = JsonConvert.DeserializeObject<List<Customer>>(content);
             //Lay gio hang ra de xu ly
             var cart = HttpContext.Session.Get<List<CartItem>>("GioHang");
+            //lay thong tin customer dang login 
             var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);
+            //lay attribute name cua nguoi dang nhap.
             string taikhoanID= UserName.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
             MuaHangVM model = new MuaHangVM();
             if (taikhoanID != null)
