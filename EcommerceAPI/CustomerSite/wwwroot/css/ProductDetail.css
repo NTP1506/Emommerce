@@ -1,6 +1,6 @@
 ﻿#rating {
     position: relative;
-    height: 50px;
+    height: 25%;
 }
 #five {
     z-index: 0;
@@ -31,4 +31,12 @@
     cursor: pointer;
     color: gold;
     z-index: 5;
+}
+/*set all star labels when an input is checked to gold*/
+#rating:has(label input:checked) label {
+    color: gold;
+}
+/*set all star labels behind checked input to black*/
+#rating label:has(input:checked) ~ label {
+    color: black;
 }

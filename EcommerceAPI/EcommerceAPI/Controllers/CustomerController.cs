@@ -56,15 +56,17 @@ namespace EcommerceAPI.Controllers
 
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, [FromBody] Share_Models.Customer model)
+        public async Task<ActionResult> Update( int id, [FromBody] Share_Models.Customer model)
         {
-            var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == id);
-
-            if (product == null)
+            var customer = await _dbContext.Customers.FirstOrDefaultAsync(x => x.CustomerId == id);
+            
+            //_dbContext.Customers.Add(model);
+            if (customer == null)
             {
                 return NotFound();
             }
-
+            customer.CustomerId = model.CustomerId;
+            customer.Password = model.Password;
             //product.Name = model.Name;
             //product.Price = model.Price;
             //product.Description = model.Description;

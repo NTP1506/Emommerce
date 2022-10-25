@@ -5,6 +5,7 @@
     ViewData["Title"] = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     List<Product> lsProducts = ViewBag.SanPham;
+    //List<Rating> ratings = Model.Ratings.ToList();
 }
 <link href="~/css/productdetail.css" rel="stylesheet" />
 <!-- Begin Main Content Area  -->
@@ -32,12 +33,14 @@
                 <div class="col-lg-6">
                     <div class="single-product-img h-100">
                         <div class="swiper-container single-product-slider">
+                            
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <a href="~/images/products/@Model.Thumb" class="single-img gallery-popup">
                                         <img class="img-full" src="~/images/products/@Model.Thumb" alt="@Model.Title">
                                     </a>
                                 </div>
+                                
                                 <div class="swiper-slide">
                                     <a href="~/assets/images/product/large-size/2-2-555x645.jpg" class="single-img gallery-popup">
                                         <img class="img-full" src="~/assets/images/product/large-size/2-2-555x645.jpg" alt="Product Image">
@@ -68,54 +71,27 @@
                                     <span class="new-price text-danger">@Model.Price.Value.ToString("#,##0") VNĐ</span>
                                     <span class="old-price text-primary">$90.00</span>
                                 </div>
-                                <!--Rating form-->
-                                @using (Html.BeginForm("Rate", "Product", new { id = Model.ProductId,  }, FormMethod.Post, null, new { id = "rating" }))
+                             @* <h1>@Model.Rating</h1>*@
+                                @if (Model.Rating > 0)
                                 {
-                                    <label id="one">
-                                        <input type="radio" name="rate" value="1" onchange="this.form.submit()" hidden />
-                                        <i class="fa fa-star rate-star"></i>
-                                    </label>
-                                    <label id="two">
-                                        <input type="radio" name="rate" value="2" onchange="this.form.submit()" hidden />
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star rate-star"></i>
-                                    </label>
-                                    <label id="three">
-                                        <input type="radio" name="rate" value="3" onchange="this.form.submit()" hidden />
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star rate-star"></i>
-                                    </label>
-                                    <label id="four">
-                                        <input type="radio" name="rate" value="4" onchange="this.form.submit()" hidden />
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star rate-star"></i>
-                                    </label>
-                                    <label id="five">
-                                        <input type="radio" name="rate" value="5" onchange="this.form.submit()" hidden />
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star rate-star"></i>
-                                    </label>
+                                    @for (var i = 1; i <= 5; i++)
+                                    {
+                                        if (i <= Model.Rating)
+                                        {
+                                            <i class="fa fa-star text-warning"></i>
+                                        }
+                                        else if (i - Model.Rating < 1)
+                                        {
+                                            <i class="fa fa-star-half text-warning"></i>
+                                        }
+                                    }
+                                    <span>(@string.Format("{0:f2}", Model.Rating))</span>
+                                    <p class="m-0"><i>@Model.RatingCount Rate(s)</i></p>
                                 }
-                               @* <div class="rating-box-wrap pb-7">
-                                    <div class="rating-box">
-                                        <ul>
-                                            <li><i class="pe-7s-star"></i></li>
-                                            <li><i class="pe-7s-star"></i></li>
-                                            <li><i class="pe-7s-star"></i></li>
-                                            <li><i class="pe-7s-star"></i></li>
-                                            <li><i class="pe-7s-star"></i></li>
-                                        </ul>
-                                    </div>
-                                    <div class="review-status ps-4">
-                                        <a href="javascript:void(0)">( 1 Customer Review )</a>
-                                    </div>
-                                </div>*@
+                                else
+                                {
+                                    <p class="m-0"><i>(Be the first to rate)</i></p>
+                                }
                                 <p class="short-desc mb-6">
                                     @Model.ShortDesc
                                 </p>
@@ -160,6 +136,51 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-12 order-lg-2 order-1 pt-10 pt-lg-0">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <h3 class= "mt-5"> Đánh Giá Sản Phẩm </h3>
+                                <Form id="rating" class="position-relative h-25 mt-5" asp-action="Rate" asp-controller="Product" asp-route-id="@Model.ProductId" asp-route-_alias="@Model.Alias" method="post">
+                                
+                                    <label id="one">
+                                        <input type="radio" name="rate" value="1" hidden />
+                                        <i class="fa fa-star rate-star"></i>
+                                    </label>
+                                    <label id="two">
+                                        <input type="radio" name="rate" value="2" hidden />
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star rate-star"></i>
+                                    </label>
+                                    <label id="three">
+                                        <input type="radio" name="rate" value="3" hidden />
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star rate-star"></i>
+                                    </label>
+                                    <label id="four">
+                                        <input type="radio" name="rate" value="4" hidden />
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star rate-star"></i>
+                                    </label>
+                                    <label id="five">
+                                        <input type="radio" name="rate" value="5" hidden />
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star rate-star"></i>
+                                    </label>
+
+                                    @*<textarea class="mt-4 w-100" rows="4" cols="50" name="comment" form="rating" placeholder="Comment..." required>&nbsp;</textarea>*@
+                                    <button class="btn btn-outline-secondary mt-5" type="submit">Submit</button>
+                                </Form>
+                                
+                            }
+
+                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -168,6 +189,12 @@
     <div class="product-tab-area section-space-top-100">
         <div class="container">
             <div class="row">
+                <div class="border border-secondary rounded ps-2">
+                    @* @foreach (Rating rating in ratings)
+                    {
+                    <partial name="../Product/ProductRatingPartial" for="@rating" />
+                    }*@
+                </div>
                 <div class="col-lg-12">
                     <ul class="nav product-tab-nav product-tab-style-2" role="tablist">
                         <li class="nav-item" role="presentation">

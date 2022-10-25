@@ -10,6 +10,7 @@ using System.Net.Http;
 using Share_Models;
 using Newtonsoft.Json;
 using System.Collections;
+using Microsoft.CodeAnalysis;
 
 namespace CustomerSite.Controllers
 {
@@ -22,11 +23,11 @@ namespace CustomerSite.Controllers
         List<Category> _categories;
         public ProductController()
         {
-            _httpClient =new HttpClient();
+            _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("https://localhost:7137");
         }
         [Route("shop.html", Name = ("ShopProduct"))]
-        public async  Task<IActionResult> Index(int? page)
+        public async Task<IActionResult> Index(int? page)
         {
             var response = await _httpClient.GetAsync("Product/Get");
             var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
@@ -42,7 +43,7 @@ namespace CustomerSite.Controllers
                 ViewBag.CurrentPage = pageNumber;
                 return View(models);
             }
-             catch
+            catch
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -56,7 +57,7 @@ namespace CustomerSite.Controllers
             try
             {
                 var pageSize = 10;
-               
+
                 var danhmuc = _categories.SingleOrDefault(x => x.Alias == Alias);
 
                 var lsTinDangs = _products
@@ -74,11 +75,13 @@ namespace CustomerSite.Controllers
 
         }
         [Route("/{Alias}-{id}.html", Name = ("ProductDetails"))]
-        public async  Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             var response = await _httpClient.GetAsync("Product/Get");
             var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
             _products = JsonConvert.DeserializeObject<List<Product>>(content);
+
+           
             try
             {
                 var product = _products.FirstOrDefault(x => x.ProductId == id);
@@ -100,23 +103,29 @@ namespace CustomerSite.Controllers
             }
         }
         //[HttpPost]
-        //[Route("Rate")]
-        //public async Task<IActionResult> Rate(string _alias, int id, [FromForm] byte rate)
-        //{
-        //    var response = await _httpClient.GetAsync("Product/Get");
-        //    var content = await response.Content.ReadAsStringAsync();  // laasys body cua data
-        //    _products = JsonConvert.DeserializeObject<List<Product>>(content);
+        [Route("Rate")]
+        public async Task<IActionResult> Rate( string _alias, int id, [FromForm] byte rate)
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                var _rating = new Rating1
+                {
+                    alias = _alias,                        //product = _products.FirstOrDefault(p => p.ProductId == id),
+                    productId = id,
+                    Name = User.Identity.Name,
+                    points = rate,
+                    Date = DateTime.Now
+                };
+                var response = await _httpClient.PostAsJsonAsync("Product/Rate", _rating);
+                    
 
-        //    //var _alias = _products
-        //    //        .Where(x => x.ProductId == id).ToList();
-                   
-        //    response = await _httpClient.PostAsJsonAsync("Product/Rate", new ProductRate { Id = id, Rate = rate });
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("Details", new { alias = _alias,id = id });
+                }
+            }
 
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        return RedirectToAction("Details", new {id = id});
-        //    }
-        //    return new BadRequestResult();
-        //}
+            return new BadRequestResult();
+        }
     }
 }

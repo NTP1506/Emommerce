@@ -1,0 +1,14 @@
+﻿@using Share_Models
+ 
+@model Rating 
+<div class="mb-2">
+    <p class="mb-0">
+        <b>@Model.customer.FullName: </b>
+        @for (var i = 1; i <= Model.points; i++)
+        {
+            <i class="fa fa-star text-warning"></i>
+        }
+        &nbsp;<small><i>@Model.Date.ToString("dd/MM/yyyy")</i></small>
+    </p>
+    <p class="ms-2 mt-0">@Model.Comment</p>
+</div>

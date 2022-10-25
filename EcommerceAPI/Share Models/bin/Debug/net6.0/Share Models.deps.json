@@ -7,14 +7,27 @@
   "targets": {
     ".NETCoreApp,Version=v6.0": {
       "Share Models/1.0.0": {
+        "dependencies": {
+          "Ecommerce.DTO": "1.0.0"
+        },
         "runtime": {
           "Share Models.dll": {}
+        }
+      },
+      "Ecommerce.DTO/1.0.0": {
+        "runtime": {
+          "Ecommerce.DTO.dll": {}
         }
       }
     }
   },
   "libraries": {
     "Share Models/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Ecommerce.DTO/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

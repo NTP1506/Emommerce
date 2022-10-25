@@ -9,7 +9,7 @@ namespace EcommerceAPI.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
+            /*migrationBuilder.CreateTable(
                 name: "Attributes",
                 columns: table => new
                 {
@@ -308,12 +308,12 @@ namespace EcommerceAPI.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Products_CatID",
                 table: "Products",
-                column: "CatID");
+                column: "CatID");*/
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
+            /*migrationBuilder.DropTable(
                 name: "Accounts");
 
             migrationBuilder.DropTable(
@@ -347,7 +347,7 @@ namespace EcommerceAPI.Migrations
                 name: "TransactStatus");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Categories");*/
         }
     }
 }

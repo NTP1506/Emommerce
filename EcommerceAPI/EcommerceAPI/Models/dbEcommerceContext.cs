@@ -27,6 +27,7 @@ namespace EcommerceAPI.Models
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Page> Pages { get; set; }
         public virtual DbSet<Product> Products { get; set; }
+        public virtual DbSet<Rating> Ratings { get; set; }
         public virtual DbSet<Role> Roles { get; set; }
         //public virtual DbSet<Shipper> Shippers { get; set; }
         //public virtual DbSet<TblTinTuc> TblTinTucs { get; set; }

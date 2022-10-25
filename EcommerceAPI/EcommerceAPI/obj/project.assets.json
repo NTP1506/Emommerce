@@ -1012,9 +1012,22 @@
           }
         }
       },
+      "Ecommerce.DTO/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v6.0",
+        "compile": {
+          "bin/placeholder/Ecommerce.DTO.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Ecommerce.DTO.dll": {}
+        }
+      },
       "Share Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Ecommerce.DTO": "1.0.0"
+        },
         "compile": {
           "bin/placeholder/Share Models.dll": {}
         },
@@ -2559,6 +2572,11 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+    },
+    "Ecommerce.DTO/1.0.0": {
+      "type": "project",
+      "path": "../Ecommerce.DTO/Ecommerce.DTO.csproj",
+      "msbuildProject": "../Ecommerce.DTO/Ecommerce.DTO.csproj"
     },
     "Share Models/1.0.0": {
       "type": "project",

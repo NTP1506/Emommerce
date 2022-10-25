@@ -22,3 +22,6 @@ D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Mo
 D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\refint\Share Models.dll
 D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.pdb
 D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\ref\Share Models.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\bin\Debug\net6.0\Ecommerce.DTO.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\bin\Debug\net6.0\Ecommerce.DTO.pdb
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Share Models\obj\Debug\net6.0\Share Models.csproj.CopyComplete

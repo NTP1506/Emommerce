@@ -1,0 +1,12 @@
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\bin\Debug\net6.0\Ecommerce.DTO.deps.json
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\bin\Debug\net6.0\Ecommerce.DTO.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\bin\Debug\net6.0\Ecommerce.DTO.pdb
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\Ecommerce.DTO.csproj.AssemblyReference.cache
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\Ecommerce.DTO.GeneratedMSBuildEditorConfig.editorconfig
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\Ecommerce.DTO.AssemblyInfoInputs.cache
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\Ecommerce.DTO.AssemblyInfo.cs
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\Ecommerce.DTO.csproj.CoreCompileInputs.cache
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\Ecommerce.DTO.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\refint\Ecommerce.DTO.dll
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\Ecommerce.DTO.pdb
+D:\Source Tree_Git_Ecommerce\EcommerceAPI\Ecommerce.DTO\obj\Debug\net6.0\ref\Ecommerce.DTO.dll

@@ -23,6 +23,7 @@ using System.IdentityModel.Tokens.Jwt;
 using PagedList.Core;
 using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
+using static System.Net.WebRequestMethods;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CustomerSite.Controllers
@@ -271,7 +272,7 @@ namespace CustomerSite.Controllers
                         return RedirectToAction("ThongBao", "Accounts");
                     }
 
-                    response = await _httpClient.PostAsJsonAsync("Account/login", customer);
+                    response = await _httpClient.PostAsJsonAsync("Account/Login", customer);
                     content = await response.Content.ReadAsStringAsync();
                     JwtResponseToken responseToken = JsonConvert.DeserializeObject<JwtResponseToken>(content);
                     var handler = new JwtSecurityTokenHandler();
@@ -323,7 +324,7 @@ namespace CustomerSite.Controllers
             {
                 var response = await _httpClient.GetAsync("/customer-get");
                 var content = await response.Content.ReadAsStringAsync();  
-                 var _customers = JsonConvert.DeserializeObject<List<Customer>>(content);
+                var _customers = JsonConvert.DeserializeObject<List<Customer>>(content);
                 var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
                 var handler = new JwtSecurityTokenHandler();
                 JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);
@@ -343,7 +344,7 @@ namespace CustomerSite.Controllers
                         string passnew = (model.Password.Trim() + khachhang.Salt.Trim()).ToMD5();
                         khachhang.Password = passnew;
                         var id = khachhang.CustomerId;
-                        response = await _httpClient.PutAsJsonAsync("/{id}", khachhang.CustomerId);
+                        response = await _httpClient.PutAsJsonAsync($"/{id}", khachhang);
                         //_context.Update(taikhoan);
                         //_context.SaveChanges();
                         // _notyfService.Success("Đổi mật khẩu thành công");

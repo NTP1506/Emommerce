@@ -11,6 +11,7 @@ namespace Share_Models
         {
             AttributesPrices = new HashSet<AttributesPrice>();
             OrderDetails = new HashSet<OrderDetail>();
+            //Ratings = new HashSet<Rating>();
         }
 
         public int ProductId { get; set; }
@@ -42,5 +43,6 @@ namespace Share_Models
 
         public virtual ICollection<AttributesPrice> AttributesPrices { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<Rating> Ratings { get; set; }
     }
 }

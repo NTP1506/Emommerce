@@ -663,6 +663,12 @@ namespace EcommerceAPI.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<float?>("Rating")
+                        .HasColumnType("real");
+
+                    b.Property<int?>("RatingCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("ShortDesc")
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -690,6 +696,41 @@ namespace EcommerceAPI.Migrations
                     b.HasIndex("CatId");
 
                     b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("Share_Models.Rating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Comment")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CustomerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("points")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CustomerId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Share_Models.Role", b =>
@@ -809,9 +850,8 @@ namespace EcommerceAPI.Migrations
             modelBuilder.Entity("Share_Models.Order", b =>
                 {
                     b.HasOne("Share_Models.TransactStatus", "TransactStatus")
-                        .WithMany("Orders")
-                        .HasForeignKey("TransactStatusId")
-                        .HasConstraintName("FK_Orderss");
+                        .WithMany()
+                        .HasForeignKey("TransactStatusId");
 
                     b.Navigation("TransactStatus");
                 });
@@ -823,30 +863,46 @@ namespace EcommerceAPI.Migrations
                         .HasForeignKey("OrderId")
                         .HasConstraintName("FK_OrderDetails");
 
-                    b.HasOne("Share_Models.Product", null)
+                    b.HasOne("Share_Models.Product", "Product")
                         .WithMany("OrderDetails")
                         .HasForeignKey("ProductId");
 
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("Share_Models.Product", b =>
                 {
                     b.HasOne("Share_Models.Category", "Cat")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CatId");
 
                     b.Navigation("Cat");
                 });
 
+            modelBuilder.Entity("Share_Models.Rating", b =>
+                {
+                    b.HasOne("Share_Models.Customer", "customer")
+                        .WithMany()
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Share_Models.Product", "product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("customer");
+
+                    b.Navigation("product");
+                });
+
             modelBuilder.Entity("Share_Models.Attribute", b =>
                 {
                     b.Navigation("AttributesPrices");
-                });
-
-            modelBuilder.Entity("Share_Models.Category", b =>
-                {
-                    b.Navigation("Products");
                 });
 
             modelBuilder.Entity("Share_Models.Order", b =>
@@ -864,11 +920,6 @@ namespace EcommerceAPI.Migrations
             modelBuilder.Entity("Share_Models.Role", b =>
                 {
                     b.Navigation("Accounts");
-                });
-
-            modelBuilder.Entity("Share_Models.TransactStatus", b =>
-                {
-                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }

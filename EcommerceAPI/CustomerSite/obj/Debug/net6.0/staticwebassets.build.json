@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "DmqyYTk5jPQi+AjBL6x2/TRnUUJ/23NDML85Zfg/np0=",
+  "Hash": "oWp1N90KReJP9liXUBC+HEb8PaAWtWYrskgn2HGB63E=",
   "Source": "CustomerSite",
   "BasePath": "_content/CustomerSite",
   "Mode": "Default",
@@ -4097,6 +4097,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\BackGround_Home.png",
+      "SourceId": "CustomerSite",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\",
+      "BasePath": "_content/CustomerSite",
+      "RelativePath": "images/BackGround_Home.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\BackGround_Home.png"
+    },
+    {
       "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\cart-heading.jpg",
       "SourceId": "CustomerSite",
       "SourceType": "Discovered",
@@ -4129,6 +4146,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\contact-heading.jpg"
+    },
+    {
+      "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\Ecommerce_2.jpg",
+      "SourceId": "CustomerSite",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\",
+      "BasePath": "_content/CustomerSite",
+      "RelativePath": "images/Ecommerce_2.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Ecommerce_2.jpg"
+    },
+    {
+      "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\Ecommerce_Image.jpg",
+      "SourceId": "CustomerSite",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\",
+      "BasePath": "_content/CustomerSite",
+      "RelativePath": "images/Ecommerce_Image.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Ecommerce_Image.jpg"
     },
     {
       "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\gallery-1.jpg",
@@ -4197,6 +4248,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\gallery-4.jpg"
+    },
+    {
+      "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\Inner_Logo.png",
+      "SourceId": "CustomerSite",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\",
+      "BasePath": "_content/CustomerSite",
+      "RelativePath": "images/Inner_Logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Inner_Logo.png"
     },
     {
       "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\more-info.jpg",
