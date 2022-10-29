@@ -161,7 +161,7 @@
                     @foreach (var item in Model.Products)
                     {
                         <li class="nav-item" role="presentation">
-                            <a id="fresh-fruits-tab" data-bs-toggle="tab" href="#@item.category.Alias" role="tab" aria-controls="fresh-fruits" aria-selected="false">
+                            <a id="fresh-fruits-tab" data-bs-toggle="tab" href="#catid-@item.category.CatId" role="tab" aria-controls="fresh-fruits" aria-selected="false">
                                 <div class="product-tab-icon">
                                     <img style="width:80%;height:auto" src="~/images/products/@item.category.Thump" alt="@item.category.Title">
                                 </div>
@@ -175,7 +175,7 @@
                     </div>
                     @foreach (var item in Model.Products)
                     {
-                    <div class="tab-pane fade" id="@item.category.Alias" role="tabpanel" aria-labelledby="fresh-fruits-tab">
+                        <div class="tab-pane fade" id="catid-@item.category.CatId" role="tabpanel" aria-labelledby="fresh-fruits-tab">
                          @await Html.PartialAsync("_ListProductPartialView", item.lsProducts)
                     </div>}
                 </div>

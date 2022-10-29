@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -24,6 +24,7 @@ using PagedList.Core;
 using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Net.WebRequestMethods;
+using Microsoft.AspNetCore.Identity;
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CustomerSite.Controllers
@@ -37,6 +38,9 @@ namespace CustomerSite.Controllers
         List<Customer> _customers;
         List<Order> _orders;
         Check _check;
+        private readonly SignInManager<IdentityUser> signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        //private readonly IUserService _userService
         public AccountsController()
         {
            
@@ -337,19 +341,35 @@ namespace CustomerSite.Controllers
                 }
                 if (ModelState.IsValid)
                 {
-                    var khachhang = _customers.SingleOrDefault(x => x.FullName == Convert.ToString(taikhoanID));
-                    if (khachhang == null) return RedirectToAction("Login", "Accounts");
-                    var pass = (model.PasswordNow.Trim() + khachhang.Salt.Trim()).ToMD5();
+                    var claimsIdentity = (ClaimsIdentity)User.Identity;
+                    var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                    var user = await _userManager.FindByIdAsync(claims.Value);
+                    var responses = await _userManager.ChangePasswordAsync(user, model.PasswordNow, model.Password);
+                    if(responses.Succeeded)
                     {
-                        string passnew = (model.Password.Trim() + khachhang.Salt.Trim()).ToMD5();
-                        khachhang.Password = passnew;
-                        var id = khachhang.CustomerId;
-                        response = await _httpClient.PutAsJsonAsync($"/{id}", khachhang);
-                        //_context.Update(taikhoan);
-                        //_context.SaveChanges();
-                        // _notyfService.Success("Đổi mật khẩu thành công");
+                        ModelState.Clear();
                         return RedirectToAction("Dashboard", "Accounts");
-                    }
+
+                    }    
+
+                    foreach (var error in responses.Errors)
+                    {
+                        ModelState.AddModelError("", error.Description);
+                    }    
+                    
+                    //var khachhang = _customers.SingleOrDefault(x => x.FullName == Convert.ToString(taikhoanID));
+                    //if (khachhang == null) return RedirectToAction("Login", "Accounts");
+                    //var pass = (model.PasswordNow.Trim() + khachhang.Salt.Trim()).ToMD5();
+                    //{
+                    //    string passnew = (model.Password.Trim() + khachhang.Salt.Trim()).ToMD5();
+                    //    khachhang.Password = passnew;
+                    //    var id = khachhang.CustomerId;
+                    //    response = await _httpClient.PutAsJsonAsync($"/{id}", khachhang);
+                    //    //_context.Update(taikhoan);
+                    //    //_context.SaveChanges();
+                    //    // _notyfService.Success("Đổi mật khẩu thành công");
+                    //    return RedirectToAction("Dashboard", "Accounts");
+                    //}
                 }
             }
             catch

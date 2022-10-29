@@ -70,7 +70,7 @@ namespace EcommerceAPI.Controllers
                     }
                     else
                     {
-                        if (product.RatingCount == null) product.RatingCount = 0;
+                        if (product.RatingCount == null) product.RatingCount = 1;
                         if (product.Rating == null || product.Rating <= 0) product.Rating = productRate.points;
                         else
                         {

@@ -13,6 +13,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                    p.AccessDeniedPath = "/not-found.html";
                });
 builder.Services.AddControllersWithViews();
+
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.MaxValue;

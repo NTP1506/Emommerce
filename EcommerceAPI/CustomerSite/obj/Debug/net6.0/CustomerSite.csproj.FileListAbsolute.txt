@@ -536,5 +536,3 @@ D:\Source Tree_Git_Ecommerce\EcommerceAPI\CustomerSite\obj\Debug\net6.0\refint\C
 D:\Source Tree_Git_Ecommerce\EcommerceAPI\CustomerSite\obj\Debug\net6.0\CustomerSite.pdb
 D:\Source Tree_Git_Ecommerce\EcommerceAPI\CustomerSite\obj\Debug\net6.0\CustomerSite.genruntimeconfig.cache
 D:\Source Tree_Git_Ecommerce\EcommerceAPI\CustomerSite\obj\Debug\net6.0\ref\CustomerSite.dll
-D:\Source Tree_Git_Ecommerce\EcommerceAPI\CustomerSite\bin\Debug\net6.0\Ecommerce.DTO.dll
-D:\Source Tree_Git_Ecommerce\EcommerceAPI\CustomerSite\bin\Debug\net6.0\Ecommerce.DTO.pdb
