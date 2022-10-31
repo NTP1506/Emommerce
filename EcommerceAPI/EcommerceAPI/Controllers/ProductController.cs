@@ -34,15 +34,17 @@ namespace EcommerceAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Product model)
         {
-            var product = new Product
+/*            var product = new Product
             {
-                //Name = model.Name,
-                //Price = model.Price,
-                //Description = model.Description,
-                //BrandId = model.BrandId
-            };
+                ProductId = model.ProductId,
+                ProductName = model.ProductName,
+                Price = model.Price,
+                OrderDetails = model.OrderDetails,
 
-            _dbContext.Products.Add(product);
+                Cat = model.Cat,
+            };*/
+
+            _dbContext.Products.Add(model);
             await _dbContext.SaveChangesAsync();
 
             return Accepted();

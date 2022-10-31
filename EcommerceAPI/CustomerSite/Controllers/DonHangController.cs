@@ -39,7 +39,8 @@ namespace CustomerSite.Controllers
             }
             try
             {
-                var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+                //var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+                var taikhoan_ID = Request.Cookies["token"];
                 if (string.IsNullOrEmpty(taikhoan_ID)) return RedirectToAction("Login", "Accounts");
                 var handler = new JwtSecurityTokenHandler();
                 JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);

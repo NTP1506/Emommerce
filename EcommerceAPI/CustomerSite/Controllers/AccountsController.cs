@@ -34,17 +34,18 @@ namespace CustomerSite.Controllers
     {
         
         // private IHttpClientFactory clientFactory;
-        private HttpClient _httpClient;
+        private HttpClient _httpClient;        
         List<Customer> _customers;
         List<Order> _orders;
         Check _check;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         //private readonly IUserService _userService
-        public AccountsController()
+        public AccountsController(/*UserManager<IdentityUser> _userManager, SignInManager<IdentityUser> signInManager*/)
         {
-           
-            //this.clientFactory = clientFactory;
+            //this.signInManager = signInManager;
+            //this._userManager = _userManager;
+
             _httpClient = new HttpClient();
             _httpClient.BaseAddress = new Uri("https://localhost:7137");
         }
@@ -106,8 +107,9 @@ namespace CustomerSite.Controllers
            
             var taikhoanID_Register = HttpContext.Session.GetString("CustomerId_Register");
             //string UserName = taikhoanID.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
-            var a = HttpContext.Session.GetString("CustomerId_LogIn"); 
-            if(a!= null)
+            // var a = HttpContext.Session.GetString("CustomerId_LogIn"); 
+            var a = Request.Cookies["token"];
+            if (a!= null)
             {
                 var handler = new JwtSecurityTokenHandler();
                 JwtSecurityToken UserName = handler.ReadJwtToken(a);
@@ -277,6 +279,7 @@ namespace CustomerSite.Controllers
                     }
 
                     response = await _httpClient.PostAsJsonAsync("Account/Login", customer);
+                    
                     content = await response.Content.ReadAsStringAsync();
                     JwtResponseToken responseToken = JsonConvert.DeserializeObject<JwtResponseToken>(content);
                     var handler = new JwtSecurityTokenHandler();
@@ -295,9 +298,14 @@ namespace CustomerSite.Controllers
                     {
                         //Luu Session MaKh
                         //string UserName = secureToken.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
-                        HttpContext.Session.SetString("CustomerId_LogIn", responseToken.Token);
+                        //HttpContext.Session.SetString("CustomerId_LogIn", responseToken.Token);
                         //var taikhoanID = HttpContext.Session.GetString("CustomerId");
                         //string UserName = secureToken.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
+                        var cookieOption = new CookieOptions()
+                        {
+                            Expires = DateTime.Now.AddDays(1),
+                        };
+                        Response.Cookies.Append("token", responseToken.Token, cookieOption);
                         
                         return RedirectToAction("Dashboard", "Accounts");
                     }   
@@ -310,13 +318,23 @@ namespace CustomerSite.Controllers
             }
             return View(customer);
         }
+        //public static void SetCookie(string key, string value, int expireDay = 1)
+        //{
+        //    var cookie = new System.Net.Http.HttpCookie(key, value);
+        //    cookie.Expires = DateTime.Now.AddDays(expireDay);
+        //    HttpContext.Current.Response.Cookies.Add(cookie);
+        //}
         [HttpGet]
         [AllowAnonymous]
         [Route("dang-xuat.html", Name = "DangXuat")]
         public IActionResult Logout()
         {
             HttpContext.SignOutAsync();
-            HttpContext.Session.Remove("CustomerId_LogIn");
+            //HttpContext.Session.Remove("CustomerId_LogIn");
+            if (Request.Cookies["token"] != null)
+            {
+                Response.Cookies.Delete("token");
+            }
             HttpContext.Session.Remove("CustomerId_Register");
             return RedirectToAction("Index", "Home");
         }
@@ -329,7 +347,8 @@ namespace CustomerSite.Controllers
                 var response = await _httpClient.GetAsync("/customer-get");
                 var content = await response.Content.ReadAsStringAsync();  
                 var _customers = JsonConvert.DeserializeObject<List<Customer>>(content);
-                var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+                //var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+                var taikhoan_ID = Request.Cookies["token"];
                 var handler = new JwtSecurityTokenHandler();
                 JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);
                 //lay attribute name cua nguoi dang nhap.
@@ -342,7 +361,7 @@ namespace CustomerSite.Controllers
                 if (ModelState.IsValid)
                 {
                     var claimsIdentity = (ClaimsIdentity)User.Identity;
-                    var claims = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+                    var claims = claimsIdentity.FindFirst("CustomerId");
                     var user = await _userManager.FindByIdAsync(claims.Value);
                     var responses = await _userManager.ChangePasswordAsync(user, model.PasswordNow, model.Password);
                     if(responses.Succeeded)

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +9,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
                {
                    p.Cookie.Name = "UserLoginCookie";
                    p.ExpireTimeSpan = TimeSpan.FromDays(1);
-                   //p.LoginPath = "/dang-nhap.html";
-                   //p.LogoutPath = "/dang-xuat/html";
+                   p.LoginPath = "/Account/dang-nhap.html";
+                   p.LogoutPath = "/Account/dang-xuat/html";
                    p.AccessDeniedPath = "/not-found.html";
                });
 builder.Services.AddControllersWithViews();
@@ -30,6 +31,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseCookiePolicy();
 app.UseSession();
 app.UseHttpsRedirection();
 app.UseStaticFiles();

@@ -13,9 +13,11 @@ namespace Share_Models
         public int? OrderNuber { get; set; }
         public int? Quantity { get; set; }
         public int? Discount { get; set; }
+        public string ProductName { get; set; }
+        public int? Amount { get; set; }
         public int? Total { get; set; }
         public DateTime? ShipDate { get; set; }
-
+        
         public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
     }

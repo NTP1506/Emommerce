@@ -32,7 +32,6 @@ namespace CustomerSite.Controllers
         //public int check ;
         private HttpClient _httpClient;
         List<Product> _products;
-        //private readonly dbMarketsContext _context;
         //public INotyfService _notyfService { get; }
         public CheckoutController()
         {
@@ -61,7 +60,8 @@ namespace CustomerSite.Controllers
             //Lay gio hang ra de xu ly
             var cart = HttpContext.Session.Get<List<CartItem>>("GioHang");
             //lay thong tin customer dang login 
-            var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+            //var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+            var taikhoan_ID = Request.Cookies["token"];
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);
             //lay attribute name cua nguoi dang nhap.
@@ -94,17 +94,12 @@ namespace CustomerSite.Controllers
             response = await _httpClient.GetAsync("/Order/OrderlastID");
             content = await response.Content.ReadAsStringAsync();  
             var order_lastID = JsonConvert.DeserializeObject<Order>(content);
-            
-
-
-            //response = await _httpClient.GetAsync("Order");
-            //content = await response.Content.ReadAsStringAsync();  // laasys body cua data
-            //var _orders = JsonConvert.DeserializeObject<List<Order>>(content);
+           
             //Lay ra gio hang de xu ly
             var cart = HttpContext.Session.Get<List<CartItem>>("GioHang");
-            var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
 
-            //var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
+            //var taikhoan_ID = HttpContext.Session.GetString("");
+            var taikhoan_ID = Request.Cookies["token"];
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);
             string taikhoanID = UserName.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
@@ -144,7 +139,7 @@ namespace CustomerSite.Controllers
                     donhang.Deleted = false;
                     donhang.Paid = false;
                     donhang.Note = Utilities.StripHTML(model.Note);
-                    //donhang.TotalMoney = Convert.ToInt32(cart.Sum(x => x.TotalMoney));
+                    donhang.TotalMoney = Convert.ToInt32(cart.Sum(x => x.TotalMoney));
                     //_context.Add(donhang);
                     //_context.SaveChanges();
                     //tao danh sach don hang
@@ -156,8 +151,9 @@ namespace CustomerSite.Controllers
                         orderDetail.OrderDetailId = donhang.OrderId;
                         orderDetail.OrderId = donhang.OrderId;
                         orderDetail.ProductId = item.product.ProductId;
-                        //orderDetail.Amount = item.amount;
-                        //orderDetail.TotalMoney = donhang.TotalMoney;
+                        orderDetail.ProductName = item.product.ProductName;
+                        orderDetail.Amount = item.amount;
+                        orderDetail.Total = donhang.TotalMoney;
                         //orderDetail.Price = item.product.Price;
                         //orderDetail.CreateDate = DateTime.Now;
                         response = await _httpClient.PostAsJsonAsync("OrderDetail", orderDetail);
