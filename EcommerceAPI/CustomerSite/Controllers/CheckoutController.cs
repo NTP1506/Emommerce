@@ -19,6 +19,7 @@ using System.Net.Http.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.VisualBasic;
+using NuGet.Protocol.Plugins;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -62,8 +63,13 @@ namespace CustomerSite.Controllers
             //lay thong tin customer dang login 
             //var taikhoan_ID = HttpContext.Session.GetString("CustomerId_LogIn");
             var taikhoan_ID = Request.Cookies["token"];
+            if (taikhoan_ID == null)
+            {
+                return Redirect("dang-nhap.html");
+            }
             var handler = new JwtSecurityTokenHandler();
             JwtSecurityToken UserName = handler.ReadJwtToken(taikhoan_ID);
+           
             //lay attribute name cua nguoi dang nhap.
             string taikhoanID= UserName.Claims.Where(c => c.Type == ClaimTypes.Name).SingleOrDefault().Value.ToString();
             MuaHangVM model = new MuaHangVM();

@@ -29,20 +29,36 @@ namespace EcommerceAPI.Controllers
           
             return Ok(products);
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetID(int id)
+        {
+            var SP = await _dbContext.Products
+            .FirstOrDefaultAsync(p => p.ProductId == id);
 
-        
+            if (SP == null)
+            {
+                return NotFound();
+            }
+            await _dbContext.SaveChangesAsync();
+            return Ok(SP);
+        }
+
         [HttpPost]
         public async Task<ActionResult> Create(Product model)
         {
-/*            var product = new Product
-            {
-                ProductId = model.ProductId,
-                ProductName = model.ProductName,
-                Price = model.Price,
-                OrderDetails = model.OrderDetails,
-
-                Cat = model.Cat,
-            };*/
+            //var product = new Product
+            //{
+            //    //ProductId = model.ProductId,
+            //    ProductName = model.ProductName,
+            //    Price = model.Price,
+            //    Discount = model.Discount,
+            //    OrderDetails = model.OrderDetails,
+            //    Descriptions = model.Descriptions,
+            //    ShortDesc = model.ShortDesc,
+            //    BestSellers = model.BestSellers,
+            //    UnitslnStock = model.UnitslnStock,
+            //    Cat = model.Cat,
+            //};
 
             _dbContext.Products.Add(model);
             await _dbContext.SaveChangesAsync();
@@ -111,7 +127,13 @@ namespace EcommerceAPI.Controllers
         public async Task<ActionResult> Update(int id, Product model)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == id);
-
+            product.ProductName = model.ProductName;
+            product.ProductId = model.ProductId;
+            product.BestSellers = model.BestSellers;
+            product.Descriptions = model.Descriptions;
+            product.Price = model.Price;
+            product.Discount = model.Discount;
+            product.UnitslnStock = model.UnitslnStock;
             if (product == null)
             {
                 return NotFound();

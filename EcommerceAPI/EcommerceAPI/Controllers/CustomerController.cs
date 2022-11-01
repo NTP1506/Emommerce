@@ -27,8 +27,23 @@ namespace EcommerceAPI.Controllers
         }
 
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Customer>> GetID(int id)
+        {
+            var KH = await _dbContext.Customers
+            .FirstOrDefaultAsync(p => p.CustomerId == id);
+
+            if (KH == null)
+            {
+                return NotFound();
+            }
+            await _dbContext.SaveChangesAsync();
+            return Ok(KH);
+        }
+
+
         [HttpGet]
-        [Route("CustomerlastID")]
+        [Route("CustomerlastID" )]
         public async Task<ActionResult<Customer>> GetLastID()
         {
             var KH =await _dbContext.Customers
@@ -67,6 +82,10 @@ namespace EcommerceAPI.Controllers
             }
             customer.CustomerId = model.CustomerId;
             customer.Password = model.Password;
+            customer.Address = model.Address;
+            customer.FullName = model.FullName;
+            customer.Email = model.Email;
+            customer.Phone = model.Phone;
             //product.Name = model.Name;
             //product.Price = model.Price;
             //product.Description = model.Description;
