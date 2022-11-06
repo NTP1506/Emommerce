@@ -15,6 +15,11 @@ import { Link } from "react-router-dom";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 
+const handleLogout = () => {
+  
+  localStorage.removeItem("token");
+  
+};
 const Sidebar = () => {
   const { dispatch } = useContext(DarkModeContext);
   return (
@@ -43,6 +48,12 @@ const Sidebar = () => {
             <li>
               <StoreIcon className="icon" />
               <span>Products</span>
+            </li>
+          </Link>
+          <Link to="/categories" style={{ textDecoration: "none" }}>
+            <li>
+              <StoreIcon className="icon" />
+              <span>Categories</span>
             </li>
           </Link>
           <li>
@@ -83,7 +94,12 @@ const Sidebar = () => {
             <AccountCircleOutlinedIcon className="icon" />
             <span>Profile</span>
           </li>
-          <Link to="/logout" style={{ textDecoration: "none" }}>
+
+          <Link
+            to="/login"
+            onClick={handleLogout}
+            style={{ textDecoration: "none" }}
+          >
             <li>
               <ExitToAppIcon className="icon" />
               <span>Logout</span>

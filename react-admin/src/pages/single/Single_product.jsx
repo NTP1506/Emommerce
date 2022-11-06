@@ -2,7 +2,7 @@ import "./single.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
-import List from "../../components/table/Table";
+import OrderDetailTable from "../../components/table/OrderDetailTable";
 import { useEffect, useState } from "react";
 
 const Single = () => {
@@ -13,6 +13,7 @@ const Single = () => {
       .then((response) => response.json())
       .then(setData);
   }, []);
+  
   return (
     <div className="single">
       <Sidebar />
@@ -24,7 +25,7 @@ const Single = () => {
             <h1 className="title">Information</h1>
             <div className="item">
               <img
-                src="https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"
+                src={"https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%" + data.thumb}
                 alt=""
                 className="itemImg"
               />
@@ -34,10 +35,10 @@ const Single = () => {
                   <span className="itemKey">Name:</span>
                   <span className="itemValue">{data.productName}</span>
                 </div>
-                <div className="detailItem">
-                  <span className="itemKey">Alias:</span>
-                  <span className="itemValue">{data.alias}</span>
-                </div>
+                {/* <div className="detailItem">
+                  <span className="itemKey">CartName:</span>
+                  <span className="itemValue">{data.cat.cartName}</span>
+                </div> */}
                 <div className="detailItem">
                   <span className="itemKey">Price:</span>
                   <span className="itemValue">{data.price}</span>
@@ -50,10 +51,10 @@ const Single = () => {
                   <span className="itemKey">Stock:</span>
                   <span className="itemValue">{data.unitslnStock}</span>
                 </div>
-                <div className="detailItem">
+                {/* <div className="detailItem">
                   <span className="itemKey">CategoryId:</span>
                   <span className="itemValue">{data.catId}</span>
-                </div>
+                </div> */}
                 <div className="detailItem">
                   <span className="itemKey">Description:</span>
                   <span className="itemValue">{data.descriptions}</span>
@@ -71,7 +72,7 @@ const Single = () => {
         </div>
         <div className="bottom">
           <h1 className="title">Last Transactions</h1>
-          <List />
+          <OrderDetailTable id = {productId}/>
         </div>
       </div>
     </div>

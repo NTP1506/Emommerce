@@ -22,6 +22,20 @@ namespace EcommerceAPI.Controllers
             return Ok(CategoriesGetAll);
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Product>> GetID(int id)
+        {
+            var SP = await _dbContext.Categories
+            .FirstOrDefaultAsync(p => p.CatId == id);
+
+            if (SP == null)
+            {
+                return NotFound();
+            }
+            await _dbContext.SaveChangesAsync();
+            return Ok(SP);
+        }
+
         //[HttpGet]
         //public async Task<ActionResult<Category>> GetByAlias(string Alias)
         //{
@@ -32,15 +46,15 @@ namespace EcommerceAPI.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Category model)
         {
-            var category = new Category
-            {
-                //Name = model.Name,
-                //Price = model.Price,
-                //Description = model.Description,
-                //BrandId = model.BrandId
-            };
+            //var category = new Category
+            //{
+            //    //Name = model.Name,
+            //    //Price = model.Price,
+            //    //Description = model.Description,
+            //    //BrandId = model.BrandId
+            //};
 
-            _dbContext.Categories.Add(category);
+            _dbContext.Categories.Add(model);
             await _dbContext.SaveChangesAsync();
 
             return Accepted();
@@ -57,9 +71,9 @@ namespace EcommerceAPI.Controllers
                 return NotFound();
             }
 
-            //product.Name = model.Name;
-            //product.Price = model.Price;
-            //product.Description = model.Description;
+            Categories.CartName = model.CartName;
+            Categories.CatId = model.CatId;
+            Categories.Descriptions = model.Descriptions;
 
             await _dbContext.SaveChangesAsync();
             return Accepted();

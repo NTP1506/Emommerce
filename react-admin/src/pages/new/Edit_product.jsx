@@ -3,7 +3,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState, useEffect } from "react";
-
+import Uploader from "../../firebase/Upload";
 const Edit_product = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [data, setData] = useState("");
@@ -13,9 +13,14 @@ const Edit_product = ({ inputs, title }) => {
       .then((response) => response.json())
       .then(setData);
   }, []);
-  const submitHandler = function (event) {
+  const submitHandler = async function (event) {
     event.preventDefault();
-    fetch("https://localhost:7137/Product/Update/" + id, {
+    const files = Array.from(event.target.Thumb.files);
+    const filenames = await Uploader.upload(files);
+    //console.log('filenames');
+    Promise.resolve().then(() => {
+      data["Thumb"] = filenames;
+      fetch("https://localhost:7137/Product/Update/" + id, {
       method: "put",
       body: JSON.stringify(data),
       headers: {
@@ -24,6 +29,8 @@ const Edit_product = ({ inputs, title }) => {
     }).then(function () {
       alert("Lưu thay đổi");
     });
+    });
+    
   };
   const changeHandlder = function (e) {
     data[e.target.name] = e.target.value;
@@ -42,6 +49,9 @@ const Edit_product = ({ inputs, title }) => {
               src={
                 file
                   ? URL.createObjectURL(file)
+                  : data.thumb
+                  ? "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%" +
+                    data.thumb
                   : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
               alt=""
@@ -54,10 +64,14 @@ const Edit_product = ({ inputs, title }) => {
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
                 </label>
                 <input
-                  type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
+                 type="file"
+                 id="img"
+                 accept="image/*"
+                 name="Thumb"
+                 onChange={changeHandlder}
+                 //onChange={(e) => setFile(e.target.files[0])}
+                 //style={{ display: "none" }}
+                 multiple
                 />
               </div>
               <input name="productId" defaultValue={data["productId"] || ""} />

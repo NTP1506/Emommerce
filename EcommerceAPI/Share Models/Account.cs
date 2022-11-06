@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Share_Models
 {
-    public partial class Account
+
+    public partial class Account 
+
     {
         public int AccountId { get; set; }
         public string Phone { get; set; }

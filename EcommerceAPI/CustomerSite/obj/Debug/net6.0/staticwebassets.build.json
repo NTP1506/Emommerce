@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "oWp1N90KReJP9liXUBC+HEb8PaAWtWYrskgn2HGB63E=",
+  "Hash": "K/R3Mi7LVj+ZsLfP6J3rY989IVBHMr4et1lIW+Jsz9U=",
   "Source": "CustomerSite",
   "BasePath": "_content/CustomerSite",
   "Mode": "Default",
@@ -4097,6 +4097,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\account.PNG",
+      "SourceId": "CustomerSite",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\",
+      "BasePath": "_content/CustomerSite",
+      "RelativePath": "images/account.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\account.PNG"
+    },
+    {
       "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\BackGround_Home.png",
       "SourceId": "CustomerSite",
       "SourceType": "Discovered",
@@ -4112,6 +4129,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\BackGround_Home.png"
+    },
+    {
+      "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\banner.PNG",
+      "SourceId": "CustomerSite",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\",
+      "BasePath": "_content/CustomerSite",
+      "RelativePath": "images/banner.PNG",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\banner.PNG"
     },
     {
       "Identity": "D:\\Source Tree_Git_Ecommerce\\EcommerceAPI\\CustomerSite\\wwwroot\\images\\cart-heading.jpg",

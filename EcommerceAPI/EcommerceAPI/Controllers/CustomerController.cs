@@ -1,8 +1,10 @@
 ﻿
 using EcommerceAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Share_Models;
+using System.Data;
 
 namespace EcommerceAPI.Controllers
 {
@@ -18,6 +20,7 @@ namespace EcommerceAPI.Controllers
 
 
         [HttpGet]
+        //[Authorize (Roles = "Admin")]
         [Route("customer-get")]
         public async Task<ActionResult<Share_Models.Customer>> Get()
         {

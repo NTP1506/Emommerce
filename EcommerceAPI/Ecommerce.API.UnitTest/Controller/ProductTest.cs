@@ -59,6 +59,22 @@ namespace Ecommerce.API.UnitTest.Controller
             Assert.NotEmpty(data);
             Assert.Equivalent(_products, data);
         }
+
+
+        [Theory]
+        [InlineData(1)]
+        public void GetId_Success(int id)
+        {
+            //ARRANGE
+            ProductController productController = new ProductController(_context);
+
+            //ACT
+            var result = productController.GetID(id).Result.Result as ObjectResult;
+            Product? data = (Product?)result.Value;
+            Assert.NotNull(data);
+            Assert.Equivalent(_products.SingleOrDefault(c => c.ProductId == id), data);
+        }
+
         [Theory]
         [InlineData(6, "product 6", 1)]
         [InlineData(7, "product 7", 1)]
@@ -75,6 +91,65 @@ namespace Ecommerce.API.UnitTest.Controller
             Assert.Equal(_context.Products.LastOrDefault().ProductName, name);
         }
 
+        [Theory]
+        [InlineData(1, "product 11", 2)]
+        [InlineData(2, "product 22", 2)]
+        [InlineData(3, "product 33", 2)]
+        public void Update_Success(int id, string name, int catId)
+        {
+            //ARRANGE
+            ProductController productController = new ProductController(_context);
+            Product p = new Product() { ProductId = id, ProductName = name, Cat = _catagories.FirstOrDefault(c => c.CatId == catId), CatId = catId, Active = true};
+            //ACT
+            var result = productController.Update(id,p).Result;
+            Assert.NotNull(result);
+            Assert.Equivalent(_context.Products.SingleOrDefault(p => p.ProductId == id), p);
+        }
+
+        [Theory]
+        [InlineData(9, "product 11", 2)]
+        [InlineData(10, "product 22", 2)]
+        [InlineData(11, "product 33", 2)]
+        public void Update_Fail(int id, string name, int catId)
+        {
+            //ARRANGE
+            ProductController productController = new ProductController(_context);
+            Product p = new Product() { ProductId = id, ProductName = name, Cat = _catagories.FirstOrDefault(c => c.CatId == catId), CatId = catId, Active = true };
+            //ACT
+            var result = productController.Update(id, p).Result;
+            //Assert.NotNull(result);
+            Assert.IsType<NotFoundResult>(result);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Delete_Success(int id)
+        {
+            //ARRANGE
+            ProductController productController = new ProductController(_context);
+            Product p = new Product() { ProductId = id };
+            //ACT
+            var result = productController.Delete(id).Result;
+            Assert.NotNull(result);
+            Product c = _context.Products.SingleOrDefault(p => p.ProductId == id);
+            Assert.Null(c);
+            Assert.IsType<AcceptedResult>(result);
+        }
+
+        [Theory]
+        [InlineData(11)]
+        [InlineData(22)]
+        [InlineData(33)]
+        public void Delete_Fail(int id)
+        {
+            //ARRANGE
+           ProductController productController = new ProductController(_context);
+            //ACT
+            var result = productController.Delete(id).Result;
+            Assert.IsType<NotFoundResult>(result);
+        }
         public void Dispose()
         {
             _context.Database.EnsureDeleted();

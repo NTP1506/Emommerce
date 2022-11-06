@@ -1,4 +1,7 @@
 ﻿@model List<CustomerSite.ModelViews.CartItem>
+@{
+    string urls = "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%";
+}
 @if (Model != null && Model.Count() > 0)
 {
     <div class="harmic-offcanvas-body">
@@ -13,7 +16,7 @@
                     string url = $"/{item.product.Alias}-{item.product.ProductId}.html";
                     <li class="minicart-product">
                         <a href="@url" class="product-item_img">
-                            <img class="img-full" src="~/images/products/@item.product.Thumb" alt="@item.product.ProductName">
+                            <img class="img-full" src="@*~/images/products/@item.product.Thumb*@ @urls@item.product.Thumb" alt="@item.product.ProductName">
                         </a>
                         <div class="product-item_content">
                             <a class="product-item_title" href="@url">@item.product.ProductName</a>

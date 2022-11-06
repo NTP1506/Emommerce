@@ -1,11 +1,13 @@
 ﻿using EcommerceAPI.Models;
 using EcommerceAPI.ModelViews;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Share_Models;
+using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,7 +15,7 @@ using System.Text;
 
 namespace EcommerceAPI.Controllers
 {
-    
+    //[Authorize]
     [ApiController]
     [Route("[controller]")]
     public class AccountController : Controller
@@ -147,7 +149,21 @@ namespace EcommerceAPI.Controllers
             }
             return Unauthorized();
         }
+        [HttpGet]
+        [Route("checkToken")]
+        [Authorize(Roles = UserRoles.Admin)]
+        //[AllowAnonymous]
+        public async Task<IActionResult> CheckToken() => Ok(true);
 
-       
+
+        //[HttpGet]
+        //[Route("checkToken")]
+        ////[Authorize(Roles = UserRoles.Admin)]
+        //[AllowAnonymous]
+        //public async Task<IActionResult> CheckToken()
+        //{
+        //    var user = HttpContext.User;
+        //    return Ok(true);
+        //}
     }
 }

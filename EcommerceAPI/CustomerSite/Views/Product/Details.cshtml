@@ -7,6 +7,9 @@
     List<Product> lsProducts = ViewBag.SanPham;
     //List<Rating> ratings = Model.Ratings.ToList();
 }
+@{
+    string urls = "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%";
+}
 <link href="~/css/productdetail.css" rel="stylesheet" />
 <!-- Begin Main Content Area  -->
 <main class="main-content">
@@ -36,8 +39,10 @@
                             
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
-                                    <a href="~/images/products/@Model.Thumb" class="single-img gallery-popup">
-                                        <img class="img-full" src="~/images/products/@Model.Thumb" alt="@Model.Title">
+                                    @*~/images/products/@Model.Thumb*@
+                                    <a href=" @urls@Model.Thumb" class="single-img gallery-popup">
+                                        @*~/images/products/@Model.Thumb*@
+                                        <img class="img-full" src=" @urls@Model.Thumb" alt="@Model.Title">
                                     </a>
                                 </div>
                                 
@@ -391,7 +396,7 @@
                                             <div class="product-item">
                                                 <div class="product-img img-zoom-effect">
                                                     <a href="@url">
-                                                        <img class="img-full" src="~/images/products/@item.Thumb" alt="@item.Title">
+                                                        <img class="img-full" src="@*~/images/products/@item.Thumb*@ @urls@item.Thumb" alt="@item.Title">
                                                     </a>
                                                     <div class="product-add-action">
                                                         <ul>

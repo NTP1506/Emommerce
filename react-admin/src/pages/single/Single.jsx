@@ -2,8 +2,8 @@ import "./single.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
-import List from "../../components/table/Table";
 import { useEffect, useState } from "react";
+import OrderDetailTable from "../../components/table/OrderDetailTable";
 
 const Single = () => {
   const [data, setData] = useState({});
@@ -57,7 +57,7 @@ const Single = () => {
         </div>
         <div className="bottom">
         <h1 className="title">Last Transactions</h1>
-          <List/>
+          <OrderDetailTable userId = {userId} />
         </div>
       </div>
     </div>

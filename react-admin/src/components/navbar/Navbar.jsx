@@ -6,6 +6,8 @@ import FullscreenExitOutlinedIcon from "@mui/icons-material/FullscreenExitOutlin
 import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNoneOutlined";
 import ChatBubbleOutlineOutlinedIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 import ListOutlinedIcon from "@mui/icons-material/ListOutlined";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import {Grid,Paper,Avatar,TextField,Button,Typography,Link,} from "@material-ui/core";
 import { DarkModeContext } from "../../context/darkModeContext";
 import { useContext } from "react";
 
@@ -20,6 +22,14 @@ const Navbar = () => {
           <SearchOutlinedIcon />
         </div>
         <div className="items">
+          <div className="item">
+          <Link to="/register" style={{ textDecoration: "none" }}>
+            <li>
+              <AddCircleIcon className="icon" />
+              <span>Create</span>
+            </li>
+          </Link>
+          </div>
           <div className="item">
             <LanguageOutlinedIcon className="icon" />
             English

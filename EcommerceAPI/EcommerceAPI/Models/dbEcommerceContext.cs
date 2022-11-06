@@ -293,30 +293,78 @@ namespace EcommerceAPI.Models
 
                 entity.Property(e => e.Status).HasMaxLength(50);
             });
+            //SeedRoles(modelBuilder);
+            //SeedUsers(modelBuilder);
+            //SeedUserRoles(modelBuilder);
+
             
-            //for (int i = 1; i < 9; i++)
-            //{
-            //    modelBuilder.Entity<Product>().HasData(
-            //    new
-            //    {
-            //        ProductId = i,
-            //        ProductName = "Product " + i,
-            //        Descriptions = "Product " + i,
-            //        //Thump = $"./images/product-{i}.png",
-            //        Price = (int)10000,
-            //        DateCreated = DateTime.Now,
-            //        DateModified = DateTime.Now,
-            //        CatId = 1,
-            //        Active = true,
-            //        BestSellers = true,
-            //        HomeFlag = true
-            //    });
-            //}
 
             OnModelCreatingPartial(modelBuilder);
         }
 
         partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
+        //private void SeedUsers(ModelBuilder builder)
+        //{
+        //    Guid g = Guid.NewGuid();
 
+        //    // Admin
+        //    IdentityUser admin = new IdentityUser()
+
+        //    {
+        //        Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+        //        UserName = "admin",
+        //        Email = "admin@gmail.com",
+        //        LockoutEnabled = false,
+        //        PhoneNumber = "1234567890",
+        //        //FirstName = "admin",
+        //        //LastName = "admin",
+        //        //UserAddress = "sdfasdfsadf",
+        //        //Birthday = DateTime.Today,
+        //        NormalizedUserName = "ADMIN",
+        //        NormalizedEmail = "admin@gmail.com",
+        //        //RoleId = "fab4fac1-c546-41de-aebc-a14da6895711"
+        //    };
+        //    PasswordHasher<IdentityUser> passwordHasher = new PasswordHasher<IdentityUser>();
+        //    string passwordAdmin = passwordHasher.HashPassword(admin, "Phuc@123");
+        //    admin.PasswordHash = passwordAdmin;
+        //    builder.Entity<IdentityUser>().HasData(admin);
+
+        //    //for (int i = 0; i <= 10; i++)
+        //    //{
+        //    //    IdentityUser user = new IdentityUser()
+        //    //    {
+        //    //        Id = Guid.NewGuid().ToString(),
+        //    //        UserName = "user" + i,
+        //    //        Email = "user" + i + "@gmail.com",
+        //    //        LockoutEnabled = false,
+        //    //        PhoneNumber = "1234567890",
+        //    //        FirstName = "user",
+        //    //        LastName = i.ToString(),
+        //    //        UserAddress = "sdfasdfsadf",
+        //    //        Birthday = DateTime.Today,
+        //    //        NormalizedUserName = "USER" + i,
+        //    //        NormalizedEmail = "USER" + i + "@GMAIL.COM",
+        //    //        RoleId = "c7b013f0-5201-4317-abd8-c211f91b7330"
+        //    //    };
+        //    //    string password = passwordHasher.HashPassword(user, "M0untw3as3l@");
+        //    //    user.PasswordHash = password;
+        //    //    builder.Entity<UserAccount>().HasData(user);
+        //    //}
+        //}
+
+        //private void SeedRoles(ModelBuilder builder)
+        //{
+        //    builder.Entity<IdentityRole>().HasData(
+        //        new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = "Admin", ConcurrencyStamp = "1", NormalizedName = "Admin" },
+        //        new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = "User", ConcurrencyStamp = "2", NormalizedName = "User" }
+        //    );
+        //}
+
+        //private void SeedUserRoles(ModelBuilder builder)
+        //{
+        //    builder.Entity<IdentityUserRole<string>>().HasData(
+        //        new IdentityUserRole<string>() { RoleId = "fab4fac1-c546-41de-aebc-a14da6895711", UserId = "b74ddd14-6340-4840-95c2-db12554843e5" }
+        //    );
+        //}
     }
 }

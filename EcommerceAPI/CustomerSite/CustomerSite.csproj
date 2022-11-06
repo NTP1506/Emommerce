@@ -33,4 +33,8 @@
     <ProjectReference Include="..\Share Models\Share Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\icon\" />
+  </ItemGroup>
+
 </Project>

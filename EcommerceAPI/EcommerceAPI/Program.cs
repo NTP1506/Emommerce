@@ -10,16 +10,39 @@ using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 // Add services to the container.
 //Enable CORS
-builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+//builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
+//{
+//    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+//}));
+
+builder.Services.AddCors(options =>
 {
-    builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
-}));
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.AllowAnyOrigin();
+                          policy.AllowAnyMethod();
+                          policy.AllowAnyHeader();
+                      });
+});
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-    .AddEntityFrameworkStores< dbEcommerceContext> ()
+    .AddRoles<IdentityRole>()
+    .AddEntityFrameworkStores<dbEcommerceContext>()
     .AddDefaultTokenProviders();
+////Identity service
+//builder.Services.AddDefaultIdentity<IdentityUser>(
+//    //Identity service options
+//    options => {
+//        options.SignIn.RequireConfirmedAccount = false;
+//        options.SignIn.RequireConfirmedEmail = false;
+//        options.Password.RequireUppercase = false;
+//        options.Password.RequireDigit = false;
+//        options.Password.RequireNonAlphanumeric = false;
+//    }
+//).AddEntityFrameworkStores<dbEcommerceContext>();
 
 
 builder.Services.AddControllersWithViews();
@@ -72,13 +95,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseCors("corsapp");
+app.UseCors(MyAllowSpecificOrigins);
+//app.UseCors("corsapp");
 app.UseHttpsRedirection();
-//app.UseSession();
-app.UseAuthentication();
-app.UseAuthorization();
-app.UseRouting();
-//app.MapRazorPages();
 app.MapControllers();
+//app.UseSession();
+app.UseRouting();
+//Enable Authentication
+app.UseAuthentication();
+app.UseAuthorization(); //<< This needs to be between app.UseRouting(); and app.UseEndpoints();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
+
 
 app.Run();

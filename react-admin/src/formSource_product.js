@@ -36,6 +36,13 @@ export const userInputs_product = [
   },
   {
     id: 6,
+    label: "Alias",
+    type: "text",
+    placeholder: "",
+    name: "alias",
+  },
+  {
+    id: 7,
     label: "Bestseller",
     type: "boolen",
     placeholder: "",
@@ -88,16 +95,23 @@ export const productInputs_product = [
   },
   {
     id: 7,
+    label: "Alias",
+    type: "text",
+    placeholder: "",
+    name: "alias",
+  },
+  {
+    id: 8,
     label: "Bestseller",
     type: "boolean",
     placeholder: "",
     name: "bestSellers",
   },
-  {
-    id: 8,
-    label: "CategoryId",
-    type: "text",
-    placeholder: "",
-    name: "catId",
-  },
+  // {
+  //   id: 8,
+  //   label: "CategoryId",
+  //   type: "text",
+  //   placeholder: "",
+  //   name: "catId",
+  // },
 ];

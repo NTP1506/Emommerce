@@ -49,6 +49,21 @@ namespace Ecommerce.API.UnitTest.Controller
         }
 
         [Theory]
+        [InlineData(1)]
+        public void GetId_Success(int id)
+        {
+            //ARRANGE
+            CustomerController customerController = new CustomerController(_context);
+
+            //ACT
+            var result = customerController.GetID(id).Result.Result as ObjectResult;
+            Customer? data = (Customer?)result.Value;
+            Assert.NotNull(data);
+            Assert.Equivalent(_customers.SingleOrDefault(c => c.CustomerId == id), data);
+        }
+
+
+        [Theory]
         [InlineData(6, "customer_6", "123456789","customer6@gmail.com")]
         [InlineData(7, "customer_7", "123456789", "customer7@gmail.com")]
         [InlineData(8, "customer_8", "123456789", "customer8@gmail.com")]
@@ -59,12 +74,71 @@ namespace Ecommerce.API.UnitTest.Controller
             Customer p = new Customer() { CustomerId = id, FullName = name, Phone = phone , Email = email };
             //ACT
             var result = customerController.Create(p).Result;
+            // Assert
             Assert.NotNull(result);
             Assert.Equal(_context.Customers.LastOrDefault().CustomerId, id);
             Assert.Equal(_context.Customers.LastOrDefault().FullName, name);
             Assert.Equal(_context.Customers.LastOrDefault().Phone, phone);
             Assert.Equal(_context.Customers.LastOrDefault().Email, email);
         }
+
+        [Theory]
+        [InlineData(1, "customer_1'", "123456789", "customer11@gmail.com")]
+        [InlineData(2, "customer_2'", "123456789", "customer22@gmail.com")]
+        [InlineData(3, "customer_3'", "123456789", "customer33@gmail.com")]
+        public void Upadate_Success(int id, string name, string phone, string email)
+        {
+            //ARRANGE
+            CustomerController customerController = new CustomerController(_context);
+            Customer p = new Customer() { CustomerId = id, FullName = name, Phone = phone, Email = email };
+            //ACT
+            var result = customerController.Update(id,p).Result;
+            Assert.NotNull(result);
+            Assert.Equivalent(_context.Customers.SingleOrDefault(c=>c.CustomerId == id), p);
+        }
+        [Theory]
+        [InlineData(9, "customer_1'", "123456789", "customer11@gmail.com")]
+        [InlineData(10, "customer_2'", "123456789", "customer22@gmail.com")]
+        [InlineData(11, "customer_3'", "123456789", "customer33@gmail.com")]
+        public void Upadate_Fail(int id, string name, string phone, string email)
+        {
+            //ARRANGE
+            CustomerController customerController = new CustomerController(_context);
+            Customer p = new Customer() { CustomerId = id, FullName = name, Phone = phone, Email = email };
+            //ACT
+            var result = customerController.Update(id, p).Result;
+            Assert.IsType<NotFoundResult>(result);
+        }
+        [Theory]
+        [InlineData(1)]
+        [InlineData(2)]
+        [InlineData(3)]
+        public void Delete_Success(int id)
+        {
+            //ARRANGE
+            CustomerController customerController = new CustomerController(_context);
+            Customer p = new Customer() { CustomerId = id };
+            //ACT
+            var result = customerController.Delete(id).Result;
+            Assert.NotNull(result);
+            Customer c = _context.Customers.SingleOrDefault(p =>p.CustomerId == id);
+            Assert.Null(c);
+            Assert.IsType<AcceptedResult>(result);
+        }
+
+        [Theory]
+        [InlineData(11)]
+        [InlineData(22)]
+        [InlineData(33)]
+        public void Delete_Fail(int id)
+        {
+            //ARRANGE
+            CustomerController customerController = new CustomerController(_context);
+            //ACT
+            var result = customerController.Delete(id).Result;
+            Assert.IsType<NotFoundResult>(result);
+        }
+
 
         public void Dispose()
         {

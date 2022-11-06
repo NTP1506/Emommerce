@@ -4,7 +4,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var returnUrl = Context.Request.Query["ReturnUrl"];
 }
-
+@{
+    string urls = "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%";
+}
 <main class="main-content">
     <div class="breadcrumb-area breadcrumb-height" data-bg-image="/assets/images/banner/2-1-1920x523.jpg">
         <div class="container h-100">
@@ -53,7 +55,7 @@
                                                     </td>
                                                     <td class="product-thumbnail">
                                                         <a href="javascript:void(0)">
-                                                            <img src="~/images/products/@item.product.Thumb" alt="@item.product.Title">
+                                                            <img src="@*~/images/products/@item.product.Thumb*@ @urls@item.product.Thumb" alt="@item.product.Title">
                                                         </a>
                                                     </td>
                                                     <td class="product-name"><a href="javascript:void(0)">@item.product.ProductName</a></td>

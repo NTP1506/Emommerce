@@ -23,6 +23,19 @@ namespace EcommerceAPI.Controllers
             var orderdetails = await _dbContext.OrderDetails.ToListAsync();
             return Ok(orderdetails);
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrderDetail>> GetID(int id)
+        {
+            var Order = await _dbContext.OrderDetails
+            .AllAsync(p => p.OrderId == id);
+
+            if (Order == null)
+            {
+                return NotFound();
+            }
+            await _dbContext.SaveChangesAsync();
+            return Ok(Order);
+        }
 
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] OrderDetail model)

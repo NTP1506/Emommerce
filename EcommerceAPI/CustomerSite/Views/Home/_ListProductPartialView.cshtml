@@ -1,5 +1,8 @@
 ﻿@using Share_Models
 @model List<Product>
+@{
+    string urls = "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%";
+}
 @if (Model != null && Model.Count() > 0)
 {
 <div class="product-item-wrap row">
@@ -10,7 +13,7 @@
             <div class="product-item">
                 <div class="product-img img-zoom-effect">
                     <a href="@url">
-                        <img width="200" height="200" class="img-full" src="~/images/products/@item.Thumb" alt="@item.Title">
+                        <img width="200" height="200" class="img-full" src=" @urls@item.Thumb" alt="@item.Title">
                     </a>
                     <div class="product-add-action">
                         <ul>

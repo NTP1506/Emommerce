@@ -2647,6 +2647,9 @@
       "Share Models/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v6.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "6.0.10"
+        },
         "compile": {
           "bin/placeholder/Share Models.dll": {}
         },

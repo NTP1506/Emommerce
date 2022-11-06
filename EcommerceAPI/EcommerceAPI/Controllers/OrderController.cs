@@ -37,6 +37,19 @@ namespace EcommerceAPI.Controllers
             await _dbContext.SaveChangesAsync();
             return Ok(order_ID);
         }
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Order>> GetID(int id)
+        {
+            var Order = await _dbContext.Orders
+            .AllAsync(p => p.CustomerId == id);
+
+            if (Order == null)
+            {
+                return NotFound();
+            }
+            await _dbContext.SaveChangesAsync();
+            return Ok(Order);
+        }
 
         [HttpPost]
 

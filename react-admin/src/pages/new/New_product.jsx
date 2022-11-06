@@ -2,25 +2,41 @@ import "./new.scss";
 import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Uploader from "../../firebase/Upload";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
-  const [data, setData] = useState("");
-  const submitHandler = function (event) {
+  const [cate, setCate] = useState([]);
+  const data = {};
+  useEffect(function () {
+    fetch("https://localhost:7137/Category")
+      .then((response) => response.json())
+      .then(setCate);
+  }, []);
+  const submitHandler = async function (event) {
     event.preventDefault();
-    fetch("https://localhost:7137/Product/Create", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        
-        "Content-Type": "application/json",
-      },
-    }).then(function () {
-      alert("Lưu thay đổi");
+    const files = Array.from(event.target.Thumb.files);
+    const filenames = await Uploader.upload(files);
+    //console.log('filenames');
+    Promise.resolve().then(() => {
+      data["Thumb"] = filenames;
+      fetch("https://localhost:7137/Product/Create", {
+        method: "post",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then(function () {
+        alert("Lưu thay đổi");
+      });
     });
   };
   const changeHandlder = function (e) {
+    if (e.target.name === "bestSellers") {
+      data[e.target.name] = e.target.value.toLowercase() === "true";
+      return;
+    }
     data[e.target.name] = e.target.value;
   };
 
@@ -37,23 +53,33 @@ const New = ({ inputs, title }) => {
             <img
               src={
                 file
-                  ? URL.createObjectURL(file)
-                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                ? URL.createObjectURL(file)
+                : data.thumb
+                ? "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%" +
+                  data.thumb
+                : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
               alt=""
             />
           </div>
           <div className="right">
-            <form onSubmit={submitHandler}>
+            <form
+              onSubmit={submitHandler}
+              style={{ justifyContent: "space-between" }}
+            >
               <div className="formInput">
                 <label htmlFor="file">
                   Image: <DriveFolderUploadOutlinedIcon className="icon" />
                 </label>
                 <input
                   type="file"
-                  id="file"
-                  onChange={(e) => setFile(e.target.files[0])}
-                  style={{ display: "none" }}
+                  id="img"
+                  accept="image/*"
+                  name="Thumb"
+                  onChange={changeHandlder}
+                  //onChange={(e) => setFile(e.target.files[0])}
+                  //style={{ display: "none" }}
+                  multiple
                 />
               </div>
 
@@ -72,6 +98,25 @@ const New = ({ inputs, title }) => {
                   </div>
                 );
               })}
+
+              <div className="formInput">
+                <label>Category</label>
+                <select
+                  name="catId"
+                  onChange={changeHandlder}
+                  style={{
+                    width: "100%",
+                    border: "unset",
+                    borderBottom: "1px solid gray",
+                    padding: "5px",
+                  }}
+                >
+                  <option value=""></option>
+                  {cate.map((x) => {
+                    return <option value={x.catId}>{x.cartName}</option>;
+                  })}
+                </select>
+              </div>
               <button>Send</button>
             </form>
           </div>

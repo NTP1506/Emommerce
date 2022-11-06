@@ -1,4 +1,5 @@
 ﻿using EcommerceAPI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,7 @@ namespace EcommerceAPI.Controllers
 
 
         [HttpGet]
+        
         public async Task<ActionResult<Product>> Get()
         {
 
@@ -127,6 +129,10 @@ namespace EcommerceAPI.Controllers
         public async Task<ActionResult> Update(int id, Product model)
         {
             var product = await _dbContext.Products.FirstOrDefaultAsync(x => x.ProductId == id);
+            if (product == null)
+            {
+                return NotFound();
+            }
             product.ProductName = model.ProductName;
             product.ProductId = model.ProductId;
             product.BestSellers = model.BestSellers;
@@ -134,10 +140,9 @@ namespace EcommerceAPI.Controllers
             product.Price = model.Price;
             product.Discount = model.Discount;
             product.UnitslnStock = model.UnitslnStock;
-            if (product == null)
-            {
-                return NotFound();
-            }
+            product.CatId = model.CatId;
+            product.Thumb = model.Thumb;
+            
             await _dbContext.SaveChangesAsync();
             return Accepted();
         }

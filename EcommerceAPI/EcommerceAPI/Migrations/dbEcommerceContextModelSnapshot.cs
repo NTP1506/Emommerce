@@ -48,6 +48,22 @@ namespace EcommerceAPI.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "fab4fac1-c546-41de-aebc-a14da6895711",
+                            ConcurrencyStamp = "1",
+                            Name = "Admin",
+                            NormalizedName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "c7b013f0-5201-4317-abd8-c211f91b7330",
+                            ConcurrencyStamp = "2",
+                            Name = "User",
+                            NormalizedName = "User"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -138,6 +154,25 @@ namespace EcommerceAPI.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "32978e4d-6fc8-433a-8fcf-9c34404ad158",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "admin@gmail.com",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAEAACcQAAAAECfXM9N1OMoJJkHd5N03fHlkuUFjYKtnZbJlj5/3jEThl9+cH4zWNLnNRwjMl4YlDQ==",
+                            PhoneNumber = "1234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9dc849c4-6964-4f09-9525-141e10a3c6b5",
+                            TwoFactorEnabled = false,
+                            UserName = "admin"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -200,6 +235,13 @@ namespace EcommerceAPI.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "b74ddd14-6340-4840-95c2-db12554843e5",
+                            RoleId = "fab4fac1-c546-41de-aebc-a14da6895711"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -514,6 +556,9 @@ namespace EcommerceAPI.Migrations
                     b.Property<DateTime?>("ShipDate")
                         .HasColumnType("datetime");
 
+                    b.Property<int?>("TotalMoney")
+                        .HasColumnType("int");
+
                     b.Property<int?>("TransactStatusId")
                         .HasColumnType("int")
                         .HasColumnName("TransactStatusID");
@@ -531,6 +576,9 @@ namespace EcommerceAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("OrderDetailID");
 
+                    b.Property<int?>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<int?>("Discount")
                         .HasColumnType("int");
 
@@ -544,6 +592,9 @@ namespace EcommerceAPI.Migrations
                     b.Property<int?>("ProductId")
                         .HasColumnType("int")
                         .HasColumnName("ProductID");
+
+                    b.Property<string>("ProductName")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Quantity")
                         .HasColumnType("int");
@@ -709,13 +760,13 @@ namespace EcommerceAPI.Migrations
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("ProductId")
+                    b.Property<int?>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<byte>("Status")
@@ -885,15 +936,11 @@ namespace EcommerceAPI.Migrations
                 {
                     b.HasOne("Share_Models.Customer", "customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CustomerId");
 
                     b.HasOne("Share_Models.Product", "product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .WithMany("Ratings")
+                        .HasForeignKey("ProductId");
 
                     b.Navigation("customer");
 
@@ -915,6 +962,8 @@ namespace EcommerceAPI.Migrations
                     b.Navigation("AttributesPrices");
 
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("Ratings");
                 });
 
             modelBuilder.Entity("Share_Models.Role", b =>

@@ -19,6 +19,7 @@ const Datatable = () => {
       .then((data) => {
         data = data.map((x) => {
           x["id"] = x["productId"];
+          x["cartName"] = x["cat"]["cartName"];          
           return x;
         });
         setData(data);
@@ -66,8 +67,7 @@ const Datatable = () => {
 
       <DataGrid
         className="datagrid"
-        rows={data}
-        
+        rows={data}        
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
