@@ -1,58 +1,3 @@
-// import "./login.scss";
-// import { Formik } from "formik";
-// import * as EmailValidator from "email-validator";
-// import * as Yup from "yup";
-
-// const Login = () => {
-//   return (
-//     <div className="col-8 text-center p-5">
-//       <h1>ADMIN SIGN IN</h1>
-//       <hr />
-//       <form>
-//         <table className="d-flex justify-content-center">
-//           <tbody>
-//             <tr>
-//               <td>
-//                 <label for="username">Username</label>
-//               </td>
-//               <td>
-//                 <input
-//                   required
-//                   className="input"
-//                   type="text"
-//                   name="name"
-//                   placeholder="Username..."
-//                 />
-//               </td>
-//             </tr>
-//             <tr>
-//               <td>
-//                 <label for="password">Password</label>
-//               </td>
-//               <td>
-//                 <input
-//                   required
-//                   type="password"
-//                   name="password"
-//                   placeholder="Password..."
-//                 />
-//               </td>
-//             </tr>
-//             <tr className="d-flex justify-content-end">
-//               <td>
-//                 <button className="btn btn-outline-primary" type="submit">
-//                   Sign in
-//                 </button>
-//               </td>
-//             </tr>
-//           </tbody>
-//         </table>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Login;
 import React from "react";
 import {
   Grid,
@@ -66,7 +11,7 @@ import {
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import * as EmailValidator from "email-validator";
+//import * as EmailValidator from "email-validator";
 import * as Yup from "yup";
 import { Formik, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -90,15 +35,6 @@ const Login = () => {
       handleResult(false, "Login Failed")
     );
     var token = result.data.token;
-    
-    // var isAdmin = result.data.isAdmin;
-    // if (token && isAdmin) {
-    //     setToken(token);
-    //     handleResult(true, 'Login sucessfully')
-    // }
-    // else {
-    //     handleResult(false, 'Login Failed')
-    // }
     if (token) {
       //localStorage.setItem("admin", true);
       setToken(token);
@@ -106,7 +42,7 @@ const Login = () => {
         "https://localhost:7137/Account/checkToken"
         
       );
-      alert(check)
+      
       if (check) {
         
         handleResult(true, "Login sucessfully");
@@ -123,14 +59,15 @@ const Login = () => {
       NotificationManager.success(
         `Login successfully `,
         `Login successfully`,
-        2000
+        200
       );
 
       setTimeout(() => {
-        navigate("/");
-      }, 1000);
+        // navigate("/");
+        window.location.replace("/");
+      }, 100);
     } else {
-      NotificationManager.error(message, `Login Failed Failed`, 2000);
+      NotificationManager.error(message, `Login Failed Failed`, 200);
     }
   };
   const paperStyle = {

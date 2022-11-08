@@ -41,7 +41,7 @@ namespace EcommerceAPI.Controllers
         public async Task<ActionResult<Order>> GetID(int id)
         {
             var Order = await _dbContext.Orders
-            .AllAsync(p => p.CustomerId == id);
+            .FirstOrDefaultAsync(p => p.CustomerId == id);
 
             if (Order == null)
             {

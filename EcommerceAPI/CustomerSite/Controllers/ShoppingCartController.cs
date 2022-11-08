@@ -17,8 +17,6 @@ namespace WebShop.Controllers
 {
     public class ShoppingCartController : Controller
     {
-        //private readonly dbMarketContext _context;
-        //public INotyfService _notyfService { get; }
         private HttpClient _httpClient;
         List<Product> _products;
         public ShoppingCartController()

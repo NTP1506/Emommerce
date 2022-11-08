@@ -4,14 +4,20 @@ import Navbar from "../../components/navbar/Navbar";
 import Chart from "../../components/chart/Chart";
 import OrderDetailTable from "../../components/table/OrderDetailTable";
 import { useEffect, useState } from "react";
+import RequestService from "../../components/Service/request";
 
 const Single = () => {
   const [data, setData] = useState({});
   const productId = window.location.pathname.split("/")[2];
+  
   useEffect(() => {
-    fetch("https://localhost:7137/Product/GetID/" + productId)
-      .then((response) => response.json())
-      .then(setData);
+    const f = async () => {      
+      return (await RequestService.axios.get("https://localhost:7137/Product/GetID/" + productId))["data"];     
+    }  
+    f().then(setData);
+    // fetch("https://localhost:7137/Product/GetID/" + productId)
+    //   .then((response) => response.json())
+    //   .then(setData);
   }, []);
   
   return (
@@ -66,9 +72,9 @@ const Single = () => {
               </div>
             </div>
           </div>
-          <div className="right">
+          {/* <div className="right">
             <Chart aspect={3 / 1} title="User Spending ( Last 6 Months)" />
-          </div>
+          </div> */}
         </div>
         <div className="bottom">
           <h1 className="title">Last Transactions</h1>

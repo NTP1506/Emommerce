@@ -1,9 +1,9 @@
-import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../datatablesource_product";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { userColumns, userRows } from "../../datatablesource_product";
+import "./datatable.scss";
+import RequestService from "../../components/Service/request";
 
 const Datatable = () => {
   const [data, setData] = useState(userRows);
@@ -11,15 +11,28 @@ const Datatable = () => {
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
     // post delete
-    fetch("https://localhost:7137/Product/Delete/" + id, { method: "DELETE" });
+    RequestService.axios.delete("https://localhost:7137/Product/Delete/" + id);
+    //fetch("https://localhost:7137/Product/Delete/" + id, { method: "DELETE" });
   };
   useEffect(() => {
-    fetch("https://localhost:7137/Product/Get")
-      .then((response) => response.json())
-      .then((data) => {
+    const f = async () => {
+      return (
+        await RequestService.axios.get("https://localhost:7137/Product/Get")
+      )["data"];
+    };
+    f()
+      // fetch("https://localhost:7137/Product/Get")
+      //   .then((response) => response.json())
+      .then((data) => {        
         data = data.map((x) => {
           x["id"] = x["productId"];
-          x["cartName"] = x["cat"]["cartName"];          
+          try {
+            x["cartName"] = x["cat"]["cartName"];
+          } catch(e) {
+            console.error(e);
+            x["cartName"] = "n/a";
+          }
+          
           return x;
         });
         setData(data);
@@ -67,7 +80,7 @@ const Datatable = () => {
 
       <DataGrid
         className="datagrid"
-        rows={data}        
+        rows={data}
         columns={userColumns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}

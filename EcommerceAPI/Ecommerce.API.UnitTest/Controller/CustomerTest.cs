@@ -43,6 +43,7 @@ namespace Ecommerce.API.UnitTest.Controller
             //ACT
             var result = customerController.Get().Result.Result as ObjectResult;
             List<Customer>? data = (List<Customer>?)result.Value;
+            //Assert
             Assert.NotNull(data);
             Assert.NotEmpty(data);
             Assert.Equivalent(_customers, data);

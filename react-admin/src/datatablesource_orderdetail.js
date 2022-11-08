@@ -1,7 +1,7 @@
 export const userColumns = [
     { field: "orderDetailId", headerName: "ID", width: 70 },
     {
-      field: "thump",
+      field: "thumb",
       headerName: "Image",
       width: 230,
     },

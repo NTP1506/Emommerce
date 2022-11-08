@@ -142,7 +142,7 @@ namespace EcommerceAPI.Controllers
             product.UnitslnStock = model.UnitslnStock;
             product.CatId = model.CatId;
             product.Thumb = model.Thumb;
-            
+            product.Alias = model.Alias;
             await _dbContext.SaveChangesAsync();
             return Accepted();
         }

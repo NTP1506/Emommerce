@@ -4,13 +4,20 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState, useEffect } from "react";
 import Uploader from "../../firebase/Upload";
+import RequestService from "../../components/Service/request";
+
+
 const Edit_product = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [data, setData] = useState("");
   const id = new URLSearchParams(window.location.search).get("id");
   useEffect(() => {
-    fetch("https://localhost:7137/Product/GetID/" + id)
-      .then((response) => response.json())
+    const f = async () => {      
+      return (await RequestService.axios.get("https://localhost:7137/Product/GetID/" + id))["data"];     
+    }  
+    f()
+    // fetch("https://localhost:7137/Product/GetID/" + id)
+    //   .then((response) => response.json())
       .then(setData);
   }, []);
   const submitHandler = async function (event) {
@@ -20,13 +27,24 @@ const Edit_product = ({ inputs, title }) => {
     //console.log('filenames');
     Promise.resolve().then(() => {
       data["Thumb"] = filenames;
-      fetch("https://localhost:7137/Product/Update/" + id, {
-      method: "put",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(function () {
+      const f = async () => {
+        return (
+          await RequestService.axios.put("https://localhost:7137/Product/Update/" + id, data, {            
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+        )["data"];
+      };
+      f()
+    //   fetch("https://localhost:7137/Product/Update/" + id, {
+    //   method: "put",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    .then(function () {
       alert("Lưu thay đổi");
     });
     });

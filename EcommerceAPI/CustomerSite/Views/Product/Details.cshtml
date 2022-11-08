@@ -74,7 +74,7 @@
                                 <h2 class="title">@Model.ProductName</h2>
                                 <div class="price-box pb-1">
                                     <span class="new-price text-danger">@Model.Price.Value.ToString("#,##0") VNĐ</span>
-                                    <span class="old-price text-primary">$90.00</span>
+                                  @*  <span class="old-price text-primary">$90.00</span>*@
                                 </div>
                              @* <h1>@Model.Rating</h1>*@
                                 @if (Model.Rating > 0)
@@ -126,7 +126,7 @@
                         <div class="col-12 order-lg-2 order-1 pt-10 pt-lg-0">
                             <div class="swiper-container single-product-thumbs">
                                 <div class="swiper-wrapper">
-                                    <a href="javascript:void(0)" class="swiper-slide">
+                                    @*<a href="javascript:void(0)" class="swiper-slide">
                                         <img class="img-full" src="~/assets/images/product/large-size/2-1-555x645.jpg" alt="Product Thumnail">
                                     </a>
                                     <a href="javascript:void(0)" class="swiper-slide">
@@ -137,7 +137,7 @@
                                     </a>
                                     <a href="javascript:void(0)" class="swiper-slide">
                                         <img class="img-full" src="~/assets/images/product/large-size/2-4-555x645.jpg" alt="Product Thumnail">
-                                    </a>
+                                    </a>*@
                                 </div>
                             </div>
                         </div>
@@ -396,7 +396,7 @@
                                             <div class="product-item">
                                                 <div class="product-img img-zoom-effect">
                                                     <a href="@url">
-                                                        <img class="img-full" src="@*~/images/products/@item.Thumb*@ @urls@item.Thumb" alt="@item.Title">
+                                                        <img class="img-full" src="@urls@item.Thumb" alt="@item.Title">
                                                     </a>
                                                     <div class="product-add-action">
                                                         <ul>

@@ -3,25 +3,41 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
+import RequestService from "../../components/Service/request";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [cate, setCate] = useState([]);
   const data = {};
   useEffect(function () {
-    fetch("https://localhost:7137/Category")
-      .then((response) => response.json())
+    const f = async () => {      
+      return (await RequestService.axios.get("https://localhost:7137/Category"))["data"];     
+    }  
+    f()
+    // fetch("https://localhost:7137/Category")
+    //   .then((response) => response.json())
       .then(setCate);
   }, []);
   const submitHandler = function (event) {
     event.preventDefault();
-    fetch("https://localhost:7137/Category", {
-      method: "post",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(function () {
+    const f = async () => {
+      return (
+        await RequestService.axios.post("https://localhost:7137/Category", data, {            
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+      )["data"];
+    };
+    f()
+    // fetch("https://localhost:7137/Category", {
+    //   method: "post",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    .then(function () {
       alert("Lưu thay đổi");
     });
   };

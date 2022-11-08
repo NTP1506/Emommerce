@@ -48,6 +48,20 @@ export const userInputs_product = [
     placeholder: "",
     name: "bestSellers",
   },
+  {
+    id: 8,
+    label: "Active",
+    type: "boolen",
+    placeholder: "",
+    name: "active",
+  },
+  {
+    id: 9,
+    label: "HomeFlag",
+    type: "boolen",
+    placeholder: "",
+    name: "homeFlag",
+  },
 ];
 
 export const productInputs_product = [
@@ -100,12 +114,27 @@ export const productInputs_product = [
     placeholder: "",
     name: "alias",
   },
+  
   {
     id: 8,
     label: "Bestseller",
     type: "boolean",
     placeholder: "",
     name: "bestSellers",
+  },
+  {
+    id: 9,
+    label: "Active",
+    type: "boolean",
+    placeholder: "",
+    name: "active",
+  },
+  {
+    id: 10,
+    label: "HomeFlag",
+    type: "boolean",
+    placeholder: "",
+    name: "homeFlag",
   },
   // {
   //   id: 8,

@@ -4,14 +4,19 @@ import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useEffect, useState } from "react";
 import Uploader from "../../firebase/Upload";
+import RequestService from "../../components/Service/request";
 
 const New = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [cate, setCate] = useState([]);
   const data = {};
   useEffect(function () {
-    fetch("https://localhost:7137/Category")
-      .then((response) => response.json())
+    const f = async () => {      
+      return (await RequestService.axios.get("https://localhost:7137/Category"))["data"];     
+    }  
+    f()
+    // fetch("https://localhost:7137/Category")
+    //   .then((response) => response.json())
       .then(setCate);
   }, []);
   const submitHandler = async function (event) {
@@ -21,20 +26,39 @@ const New = ({ inputs, title }) => {
     //console.log('filenames');
     Promise.resolve().then(() => {
       data["Thumb"] = filenames;
-      fetch("https://localhost:7137/Product/Create", {
-        method: "post",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }).then(function () {
-        alert("Lưu thay đổi");
-      });
+      const f = async () => {
+        return (
+          await RequestService.axios.post("https://localhost:7137/Product/Create", data, {            
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+        )["data"];
+      };
+      f()
+        // fetch("https://localhost:7137/Product/Create", {
+        //   method: "post",
+        //   body: JSON.stringify(data),
+        //   headers: {
+        //     "Content-Type": "application/json",
+        //   },
+        // })
+        .then(function () {
+          alert("Lưu thay đổi");
+        });
     });
   };
   const changeHandlder = function (e) {
     if (e.target.name === "bestSellers") {
-      data[e.target.name] = e.target.value.toLowercase() === "true";
+      data[e.target.name] = e.target.value.toLowerCase() === "true";
+      return;
+    }
+    if (e.target.name === "active") {
+      data[e.target.name] = e.target.value.toLowerCase() === "true";
+      return;
+    }
+    if (e.target.name === "homeFlag") {
+      data[e.target.name] = e.target.value.toLowerCase() === "true";
       return;
     }
     data[e.target.name] = e.target.value;
@@ -53,11 +77,11 @@ const New = ({ inputs, title }) => {
             <img
               src={
                 file
-                ? URL.createObjectURL(file)
-                : data.thumb
-                ? "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%" +
-                  data.thumb
-                : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
+                  ? URL.createObjectURL(file)
+                  : data.thumb
+                  ? "https://firebasestorage.googleapis.com/v0/b/ecommerce-5ae64.appspot.com/o/images%" +
+                    data.thumb
+                  : "https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg"
               }
               alt=""
             />

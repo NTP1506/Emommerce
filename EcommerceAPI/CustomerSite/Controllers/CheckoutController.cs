@@ -150,16 +150,22 @@ namespace CustomerSite.Controllers
                     //_context.SaveChanges();
                     //tao danh sach don hang
                     response = await _httpClient.PostAsJsonAsync("Order", donhang);
-
+                    var count = 0;
                     foreach (var item in cart)
                     {
+                       
                         OrderDetail orderDetail = new OrderDetail();
-                        orderDetail.OrderDetailId = donhang.OrderId;
+                        orderDetail.OrderDetailId = donhang.OrderId * 100 + (count++);
                         orderDetail.OrderId = donhang.OrderId;
                         orderDetail.ProductId = item.product.ProductId;
                         orderDetail.ProductName = item.product.ProductName;
                         orderDetail.Amount = item.amount;
-                        orderDetail.Total = donhang.TotalMoney;
+                        //orderDetail.Total = donhang.TotalMoney;
+                        orderDetail.Total = item.product.Price;
+                        if(orderDetail.Amount > 1)
+                        {
+                            orderDetail.Total = orderDetail.Total.Value * orderDetail.Amount.Value;
+                        }    
                         //orderDetail.Price = item.product.Price;
                         //orderDetail.CreateDate = DateTime.Now;
                         response = await _httpClient.PostAsJsonAsync("OrderDetail", orderDetail);

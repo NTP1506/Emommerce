@@ -3,25 +3,41 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState, useEffect } from "react";
+import RequestService from "../../components/Service/request";
 
 const Edit = ({ inputs, title }) => {
   const [file, setFile] = useState("");
   const [data, setData] = useState("");
   const id = new URLSearchParams(window.location.search).get("id");
   useEffect(() => {
-    fetch("https://localhost:7137/Category/" + id)
-      .then((response) => response.json())
-      .then(setData);
+    const f = async () => {      
+      return (await RequestService.axios.get("https://localhost:7137/Category/" + id))["data"];     
+    }  
+    f()
+    // fetch("https://localhost:7137/Category/" + id)
+    //   .then((response) => response.json())
+    .then(setData);
   }, []);
   const submitHandler = function (event) {
     event.preventDefault();
-    fetch("https://localhost:7137/Category/" + id, {
-      method: "put",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then(function () {
+    const f = async () => {
+      return (
+        await RequestService.axios.put("https://localhost:7137/Category/" + id, data, {            
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+      )["data"];
+    };
+    f()
+    // fetch("https://localhost:7137/Category/" + id, {
+    //   method: "put",
+    //   body: JSON.stringify(data),
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // })
+    .then(function () {
       alert("Lưu thay đổi");
     });
   };

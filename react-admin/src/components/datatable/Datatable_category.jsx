@@ -1,9 +1,10 @@
-import "./datatable.scss";
 import { DataGrid } from "@mui/x-data-grid";
-import { userColumns, userRows } from "../../datatablesource_category";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import { useEffect } from "react";
+import { userColumns, userRows } from "../../datatablesource_category";
+import "./datatable.scss";
+import RequestService from "../../components/Service/request";
+import { useEffect, useState } from "react";
+
 
 const Datatable = () => {
   const [data, setData] = useState(userRows);
@@ -11,11 +12,16 @@ const Datatable = () => {
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
     // post delete
-    fetch("https://localhost:7137/Category/" + id, { method: "DELETE" });
+    RequestService.axios.delete("https://localhost:7137/Category/" + id)
+    //fetch("https://localhost:7137/Category/" + id, { method: "DELETE" });
   };
   useEffect(() => {
-    fetch("https://localhost:7137/Category")
-      .then((response) => response.json())
+    const f = async () => {      
+      return (await RequestService.axios.get("https://localhost:7137/Category"))["data"];     
+    }  
+    f()
+    // fetch("https://localhost:7137/Category")
+    //   .then((response) => response.json())
       .then((data) => {
         data = data.map((x) => {
           x["id"] = x["catId"];
